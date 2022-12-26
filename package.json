@@ -49,13 +49,5 @@
     "husky": "^8.0.2",
     "lint-staged": "^13.1.0",
     "prettier": "2.8.1"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "*.{js,css,md,ts,tsx}": "prettier --write --ignore-unknown"
   }
 }
