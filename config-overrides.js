@@ -7,5 +7,6 @@ module.exports = override(
     "@components": path.resolve(__dirname, "src/components"),
     "@helpers": path.resolve(__dirname, "src/helpers"),
     "@hooks": path.resolve(__dirname, "src/hooks"),
+    "@constants": path.resolve(__dirname, "src/constants"),
   })
 );

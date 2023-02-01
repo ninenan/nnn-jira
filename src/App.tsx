@@ -1,6 +1,7 @@
 import React from "react";
 import logo from "./logo.svg";
-import Button from "@components/Button";
+import Login from "@components/Login";
+import Demo from "@components/Demo";
 import "./App.css";
 
 function App() {
@@ -19,7 +20,8 @@ function App() {
         >
           Learn React
         </a>
-        <Button></Button>
+        <Login />
+        <Demo />
       </header>
     </div>
   );
