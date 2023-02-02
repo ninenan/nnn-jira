@@ -1,20 +1,8 @@
 import React from "react";
-import { API_URL } from "@constants/index";
+import { useAuth } from "@/context/module/authContext";
 
 const Login = () => {
-  const handleLogin = (params: { username: string; password: string }) => {
-    fetch(`${API_URL}/register`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(params),
-    }).then((res) => {
-      if (res.ok) {
-        console.log("success");
-      }
-    });
-  };
+  const { user, login } = useAuth();
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -23,11 +11,12 @@ const Login = () => {
     const password = (event.currentTarget.elements[1] as HTMLInputElement)
       .value;
 
-    handleLogin({ username, password });
+    login({ username, password });
   };
 
   return (
     <div>
+      {user && user?.name}
       <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="username"></label>

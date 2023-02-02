@@ -3,18 +3,20 @@ import ReactDOM from "react-dom/client";
 import App from "./App";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
-import { DevTools, loadServer } from "jira-dev-tool";
+import { loadDevTools } from "jira-dev-tool";
+import { AppProvider } from "@context/index";
 
-loadServer(() => {
-  const root = ReactDOM.createRoot(
-    document.getElementById("root") as HTMLElement
-  );
+const root = ReactDOM.createRoot(
+  document.getElementById("root") as HTMLElement
+);
 
+loadDevTools(() => {
   root.render(
-    <React.StrictMode>
-      <App />
-      <DevTools />
-    </React.StrictMode>
+    <AppProvider>
+      <React.StrictMode>
+        <App />
+      </React.StrictMode>
+    </AppProvider>
   );
 });
 

@@ -21,7 +21,8 @@
       "@components/*": ["src/components/*"],
       "@hooks/*": ["src/hooks/*"],
       "@helpers/*": ["src/helpers/*"],
-      "@constants/*": ["src/constants/*"]
+      "@constants/*": ["src/constants/*"],
+      "@context/*": ["src/context/*"]
     }
   },
   "include": ["src"]
