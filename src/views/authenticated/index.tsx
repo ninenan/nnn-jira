@@ -1,8 +1,24 @@
-import { useAuth } from "@/context/module/authContext";
-import React from "react";
+import { useEffect } from "react";
+import useAuth from "@hooks/useAuth";
+import useHttp from "@/hooks/useHttp";
 
 const Authenticated = () => {
   const { logout } = useAuth();
+  const http = useHttp();
+
+  useEffect(() => {
+    if (http) {
+      const init = async () => {
+        http(["projects", { data: { name: "", personId: "" } }]).then((res) => {
+          console.log(res);
+        });
+
+        http(["users"]).then((res) => console.log("users:", res));
+      };
+
+      init();
+    }
+  }, [http]);
 
   return (
     <div>

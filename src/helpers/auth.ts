@@ -2,7 +2,7 @@ import { STORAGE, API_URL } from "@/constants";
 import { IUser, ISimpleUser } from "@/typings";
 
 // 获取 token
-export const getToken = window.localStorage.getItem(STORAGE.AUTH_TOKEN);
+export const getToken = () => window.localStorage.getItem(STORAGE.AUTH_TOKEN);
 
 export const handleUserResponse = ({ user }: { user: IUser }): IUser => {
   if (user.token) {
