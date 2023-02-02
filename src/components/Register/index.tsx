@@ -2,7 +2,7 @@ import React from "react";
 import { useAuth } from "@/context/module/authContext";
 
 const Login = () => {
-  const { login } = useAuth();
+  const { register } = useAuth();
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -11,7 +11,7 @@ const Login = () => {
     const password = (event.currentTarget.elements[1] as HTMLInputElement)
       .value;
 
-    login({ username, password });
+    register({ username, password });
   };
 
   return (
@@ -25,7 +25,7 @@ const Login = () => {
           <label htmlFor="password"></label>
           <input type="password" id="password" />
         </div>
-        <button type="submit">login</button>
+        <button type="submit">register</button>
       </form>
     </div>
   );
