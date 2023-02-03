@@ -5,6 +5,7 @@ import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 import { loadDevTools } from "jira-dev-tool";
 import { AppProvider } from "@context/index";
+import { Button } from "antd";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -15,6 +16,7 @@ loadDevTools(() => {
     <AppProvider>
       <React.StrictMode>
         <App />
+        <Button type="primary">Button</Button>
       </React.StrictMode>
     </AppProvider>
   );
