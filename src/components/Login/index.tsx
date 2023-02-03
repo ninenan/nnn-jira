@@ -1,32 +1,38 @@
-import React from "react";
 import useAuth from "@hooks/useAuth";
+import { Button, Card, Form, Input } from "antd";
 
 const Login = () => {
   const { login } = useAuth();
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const username = (event.currentTarget.elements[0] as HTMLInputElement)
-      .value;
-    const password = (event.currentTarget.elements[1] as HTMLInputElement)
-      .value;
-
-    login({ username, password });
+  const handleSubmit = (val: { username: string; password: string }) => {
+    login(val);
   };
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="username"></label>
-          <input type="text" id="username" />
-        </div>
-        <div>
-          <label htmlFor="password"></label>
-          <input type="password" id="password" />
-        </div>
-        <button type="submit">login</button>
-      </form>
+      <Card style={{ width: "450px" }}>
+        <Form onFinish={handleSubmit}>
+          <Form.Item
+            label="username"
+            name="username"
+            rules={[{ required: true, message: "请输入用户名" }]}
+          >
+            <Input type="text" id="username" />
+          </Form.Item>
+          <Form.Item
+            label="password"
+            name="password"
+            rules={[{ required: true, message: "请输入密码" }]}
+          >
+            <Input type="password" id="password" />
+          </Form.Item>
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
+              login
+            </Button>
+          </Form.Item>
+        </Form>
+      </Card>
     </div>
   );
 };

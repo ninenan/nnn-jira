@@ -1,37 +1,39 @@
-import useHttp from "@/hooks/useHttp";
-import useAuth from "@hooks/useAuth";
 import { useEffect, useState } from "react";
+import { Button } from "antd";
+import useHttp from "@/hooks/useHttp";
+import { IProject, IUser } from "@/typings";
+import List from "@components/List";
+import useAuth from "@hooks/useAuth";
+import SearchCom from "@components/SearchCom";
 
 const Authenticated = () => {
-  const [testVal, setTestVal] = useState("");
+  const [users, setUsers] = useState<IUser[]>([]);
+  const [list, setList] = useState<IProject[]>([]);
   const { logout } = useAuth();
   const http = useHttp();
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(event);
-    setTestVal(event.target.value);
-  };
-
   useEffect(() => {
-    if (http) {
-      const init = async () => {
-        http(["projects", { data: { name: "", personId: "" } }]).then((res) => {
-          console.log(res);
-        });
+    const init = async () => {
+      http(["projects", { data: { name: "", personId: "" } }]).then((res) => {
+        setList(res);
+      });
 
-        http(["users"]).then((res) => console.log("users:", res));
-      };
+      http(["users"]).then((res) => {
+        setUsers(res);
+      });
+    };
 
-      init();
-    }
-  }, [http]);
+    init();
+  }, []);
 
   return (
     <div>
-      success
       <div>
-        <input value={testVal} type="text" onChange={handleChange} />
-        <button onClick={() => logout()}>退出</button>
+        <SearchCom users={users} />
+        <List list={list} users={users} />
+        <Button onClick={() => logout()} type="primary">
+          退出
+        </Button>
       </div>
     </div>
   );

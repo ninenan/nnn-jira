@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import { Button } from "antd";
 import Login from "@components/Login";
 import Register from "@components/Register";
 
@@ -9,7 +10,7 @@ const UnAuthenticated = () => {
   return (
     <div>
       {isLogin ? <Login /> : <Register />}
-      <button onClick={() => setIsLogin(!isLogin)}>{btnText}</button>
+      <Button onClick={() => setIsLogin(!isLogin)}>{btnText}</Button>
     </div>
   );
 };
