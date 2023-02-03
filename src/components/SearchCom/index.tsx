@@ -1,6 +1,7 @@
-import React, { PropsWithChildren } from "react";
 import { Input, Select } from "antd";
+import React, { PropsWithChildren } from "react";
 import { IUser } from "@/typings";
+import styles from "./index.module.scss";
 
 interface IProps {
   users: IUser[];
@@ -17,7 +18,8 @@ const SearchCom: React.FC<PropsWithChildren<IProps>> = ({ users }) => {
   };
 
   return (
-    <div>
+    <div className={styles.header}>
+      success
       <Search
         allowClear
         placeholder="请输入"
@@ -29,7 +31,7 @@ const SearchCom: React.FC<PropsWithChildren<IProps>> = ({ users }) => {
         onChange={handleChange}
         fieldNames={{
           label: "name",
-          value: "id",
+          value: "name",
         }}
         options={users}
       />
