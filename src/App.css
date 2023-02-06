@@ -7,3 +7,14 @@ html {
 html body #root .App {
   min-height: 100vh;
 }
+
+ul {
+  margin-bottom: 0;
+}
+
+ul,
+li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}

@@ -17,7 +17,7 @@ export interface IProject {
   created: number;
   id: number;
   name: string;
-  organiztation: string;
+  organization: string;
   ownerId: number;
   personId: number;
 }

@@ -4,7 +4,9 @@ import useHttp from "@/hooks/useHttp";
 import { IProject, IUser } from "@/typings";
 import List from "@components/List";
 import useAuth from "@hooks/useAuth";
-import SearchCom from "@components/SearchCom";
+import styles from "./index.module.scss";
+import { ReactComponent as SoftwareLogo } from "@assets/img/software-logo.svg";
+import UserCom from "./components/UserCom";
 
 const Authenticated = () => {
   const [users, setUsers] = useState<IUser[]>([]);
@@ -29,11 +31,19 @@ const Authenticated = () => {
   return (
     <div>
       <div>
-        <SearchCom users={users} />
+        <header className={styles.header}>
+          <div className={styles.headerItemContainer}>
+            <SoftwareLogo width={"18rem"} />
+            {/* {titleList.map((item) => { */}
+            {/*   return <div key={item.title}>{item.title}</div>; */}
+            {/* })} */}
+          </div>
+          <UserCom />
+          {/* <Button onClick={() => logout()} type="primary"> */}
+          {/*   退出 */}
+          {/* </Button> */}
+        </header>
         <List list={list} users={users} />
-        <Button onClick={() => logout()} type="primary">
-          退出
-        </Button>
       </div>
     </div>
   );

@@ -12,6 +12,7 @@ module.exports = {
       "@constants": resolve("src/constants"),
       "@context": resolve("src/context"),
       "@assets": resolve("src/assets"),
+      "@views": resolve("src/views"),
     },
   },
 };

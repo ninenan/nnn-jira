@@ -1,0 +1,27 @@
+.container {
+  display: grid;
+  grid-template-columns: 20rem 1fr 20rem; // 每一列宽度
+  grid-template-rows: 6rem 1fr 6rem; // 每一行高度
+  grid-template-areas: "header header header" "nav main aside" "footer footer footer";
+  height: 100vh;
+}
+
+.header {
+  grid-area: header;
+}
+
+.nav {
+  grid-area: nav;
+}
+
+.main {
+  grid-area: main;
+}
+
+.aside {
+  grid-area: aside;
+}
+
+.footer {
+  grid-area: footer;
+}

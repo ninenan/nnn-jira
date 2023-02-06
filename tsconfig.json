@@ -23,7 +23,8 @@
       "@helpers/*": ["src/helpers/*"],
       "@constants/*": ["src/constants/*"],
       "@context/*": ["src/context/*"],
-      "@assets/*": ["src/assets/*"]
+      "@assets/*": ["src/assets/*"],
+      "@views/*": ["src/views/*"]
     }
   },
   "include": ["src"]
