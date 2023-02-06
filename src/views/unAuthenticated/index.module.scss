@@ -1,0 +1,42 @@
+.header {
+  width: 100%;
+  padding: 5rem 0;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.background-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: left bottom, right bottom;
+  background-size: calc(((100vw - 40rem) / 2) - 3.2rem),
+    calc(((100vw - 40rem) / 2) - 3.2rem), cover;
+}
+
+.shadow-card {
+  width: 38rem;
+  min-height: 42rem;
+  padding: 3.2rem 4rem;
+  border-radius: 0.3rem;
+  box-sizing: border-box;
+  box-shadow: rgba(0, 0, 0, 0.1) 0 0 10px;
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 2.4rem;
+  color: rgb(94, 108, 132);
+}
+
+.footer {
+  text-align: center;
+}

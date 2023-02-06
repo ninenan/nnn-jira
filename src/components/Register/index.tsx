@@ -1,6 +1,5 @@
 import useAuth from "@hooks/useAuth";
-import { Button, Card, Form, Input } from "antd";
-
+import { Button, Form, Input } from "antd";
 const Regiser = () => {
   const { register } = useAuth();
 
@@ -10,29 +9,25 @@ const Regiser = () => {
 
   return (
     <div>
-      <Card style={{ width: "450px" }}>
-        <Form onFinish={handleSubmit}>
-          <Form.Item
-            label="username"
-            name="username"
-            rules={[{ required: true, message: "请输入用户名" }]}
-          >
-            <Input type="text" id="username" />
-          </Form.Item>
-          <Form.Item
-            label="password"
-            name="password"
-            rules={[{ required: true, message: "请输入密码" }]}
-          >
-            <Input type="password" id="password" />
-          </Form.Item>
-          <Form.Item>
-            <Button type="primary" htmlType="submit">
-              register
-            </Button>
-          </Form.Item>
-        </Form>
-      </Card>
+      <Form onFinish={handleSubmit}>
+        <Form.Item
+          name="username"
+          rules={[{ required: true, message: "请输入用户名" }]}
+        >
+          <Input placeholder="请输入用户名" type="text" id="username" />
+        </Form.Item>
+        <Form.Item
+          name="password"
+          rules={[{ required: true, message: "请输入密码" }]}
+        >
+          <Input placeholder="请输入密码" type="password" id="password" />
+        </Form.Item>
+        <Form.Item>
+          <Button type="primary" htmlType="submit" style={{ width: "100%" }}>
+            register
+          </Button>
+        </Form.Item>
+      </Form>
     </div>
   );
 };

@@ -22,7 +22,8 @@
       "@hooks/*": ["src/hooks/*"],
       "@helpers/*": ["src/helpers/*"],
       "@constants/*": ["src/constants/*"],
-      "@context/*": ["src/context/*"]
+      "@context/*": ["src/context/*"],
+      "@assets/*": ["src/assets/*"]
     }
   },
   "include": ["src"]

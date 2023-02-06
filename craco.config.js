@@ -11,6 +11,7 @@ module.exports = {
       "@hooks": resolve("src/hooks"),
       "@constants": resolve("src/constants"),
       "@context": resolve("src/context"),
+      "@assets": resolve("src/assets"),
     },
   },
 };
