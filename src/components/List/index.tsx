@@ -1,16 +1,16 @@
-import { Table } from "antd";
+import { Table, TableProps } from "antd";
 import React, { PropsWithChildren } from "react";
 import SearchCom from "@components/SearchCom";
 import { IProject, IUser } from "@/typings";
 import dayjs from "dayjs";
 import styles from "./index.module.scss";
 
-interface IProps {
-  list: IProject[];
+// 直接在 antd 中的 table 组件的属性上添加一个 users 属性
+interface IProps extends TableProps<IProject> {
   users: IUser[];
 }
 
-const List: React.FC<PropsWithChildren<IProps>> = ({ list, users }) => {
+const List: React.FC<PropsWithChildren<IProps>> = ({ users, ...restProps }) => {
   return (
     <div className={styles.container}>
       <h1>项目列表</h1>
@@ -46,7 +46,7 @@ const List: React.FC<PropsWithChildren<IProps>> = ({ list, users }) => {
             },
           },
         ]}
-        dataSource={list}
+        {...restProps}
       />
     </div>
   );

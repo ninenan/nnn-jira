@@ -1,21 +1,20 @@
 import { useEffect, useState } from "react";
-import useHttp from "@/hooks/useHttp";
+import useHttp from "@hooks/useHttp";
+import useAsync from "@hooks/useAsync";
 import { IProject, IUser } from "@/typings";
-import List from "@components/List";
-import styles from "./index.module.scss";
 import { ReactComponent as SoftwareLogo } from "@assets/img/software-logo.svg";
+import List from "@components/List";
 import UserTem from "./components/UserTem";
+import styles from "./index.module.scss";
 
 const Authenticated = () => {
   const [users, setUsers] = useState<IUser[]>([]);
-  const [list, setList] = useState<IProject[]>([]);
   const http = useHttp();
+  const { data: list, run, isLoading } = useAsync<IProject[]>();
 
   useEffect(() => {
     const init = async () => {
-      http(["projects", { data: { name: "", personId: "" } }]).then((res) => {
-        setList(res);
-      });
+      run(http(["projects", { data: { name: "", personId: "" } }]));
 
       http(["users"]).then((res) => {
         setUsers(res);
@@ -23,6 +22,7 @@ const Authenticated = () => {
     };
 
     init();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -36,7 +36,7 @@ const Authenticated = () => {
           </div>
           <UserTem />
         </header>
-        <List list={list} users={users} />
+        <List dataSource={list || []} users={users} loading={isLoading} />
       </div>
     </div>
   );
