@@ -12,8 +12,14 @@
     display: flex;
     margin-bottom: 0;
 
-    div {
-      margin-right: 6rem;
+    svg,
+    h2 {
+      cursor: pointer;
+    }
+
+    h2 {
+      margin-bottom: 0px;
+      margin-left: 6rem;
     }
   }
 }

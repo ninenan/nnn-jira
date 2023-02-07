@@ -13,8 +13,8 @@ interface IProps {
 const List: React.FC<PropsWithChildren<IProps>> = ({ list, users }) => {
   return (
     <div className={styles.container}>
-      <SearchCom users={users} styles={{ marginBottom: "2rem" }} />
       <h1>项目列表</h1>
+      <SearchCom users={users} styles={{ marginBottom: "2rem" }} />
       <Table
         pagination={false}
         rowKey={"id"}
