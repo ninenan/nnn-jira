@@ -1,21 +1,19 @@
 import { useEffect, useState } from "react";
 import useHttp from "@hooks/useHttp";
-import useAsync from "@hooks/useAsync";
-import { IProject, IUser } from "@/typings";
+import { IUser } from "@/typings";
 import { ReactComponent as SoftwareLogo } from "@assets/img/software-logo.svg";
 import List from "@components/List";
 import UserTem from "./components/UserTem";
 import styles from "./index.module.scss";
+import useProject from "./hooks/useProject";
 
 const Authenticated = () => {
   const [users, setUsers] = useState<IUser[]>([]);
+  const { list, isLoading } = useProject({ name: "" });
   const http = useHttp();
-  const { data: list, run, isLoading } = useAsync<IProject[]>();
 
   useEffect(() => {
     const init = async () => {
-      run(http(["projects", { data: { name: "", personId: "" } }]));
-
       http(["users"]).then((res) => {
         setUsers(res);
       });
@@ -36,7 +34,7 @@ const Authenticated = () => {
           </div>
           <UserTem />
         </header>
-        <List dataSource={list || []} users={users} loading={isLoading} />
+        <List dataSource={list} users={users} loading={isLoading} />
       </div>
     </div>
   );

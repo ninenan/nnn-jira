@@ -43,13 +43,14 @@ const useAsync = <T,>(initialState?: State<T>) => {
   };
 
   return {
-    run,
+    isInitial: state.status === "initial",
     isLoading: state.status === "pending",
     isError: state.status === "fail",
     isSuccess: state.status === "success",
     data: state.data,
     setData,
     setError,
+    run,
   };
 };
 
