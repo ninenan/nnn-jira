@@ -7,6 +7,21 @@ interface ICustomRequestInit extends RequestInit {
   data?: object;
 }
 
+export const errorHandleMap: Record<string, any> = {
+  "401": async () => {
+    await logout();
+    window.location.reload();
+    return Promise.reject({
+      message: "清先登录",
+    });
+  },
+  "400": async (res: Response) => {
+    const data = await res.json();
+
+    return Promise.reject(data);
+  },
+};
+
 export const http = async (
   url: string,
   { data, token, headers, ...customConfig }: ICustomRequestInit = {}
@@ -28,13 +43,9 @@ export const http = async (
   }
 
   return fetch(`${API_URL}/${url}`, config).then(async (res) => {
-    // 未授权
-    if (res.status === 401) {
-      await logout();
-      window.location.reload();
-      return Promise.reject({
-        message: "清先登录",
-      });
+    // 错误处理
+    if (errorHandleMap[res.status + ""]) {
+      return errorHandleMap[res.status + ""](res);
     }
 
     const data = await res.json();

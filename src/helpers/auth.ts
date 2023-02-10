@@ -1,11 +1,12 @@
 import { STORAGE, API_URL } from "@/constants";
 import { IUser, ISimpleUser } from "@/typings";
+import { http } from "./http";
 
 // 获取 token
 export const getToken = () => window.localStorage.getItem(STORAGE.AUTH_TOKEN);
 
 export const handleUserResponse = ({ user }: { user: IUser }): IUser => {
-  if (user.token) {
+  if (user?.token) {
     window.localStorage.setItem(STORAGE.AUTH_TOKEN, user.token);
   }
 
@@ -14,34 +15,31 @@ export const handleUserResponse = ({ user }: { user: IUser }): IUser => {
 
 // 登录
 export const login = async (params: ISimpleUser) => {
-  return fetch(`${API_URL}/login`, {
+  return http("login", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(params),
-  }).then(async (res) => {
-    if (res.ok) {
-      return handleUserResponse(await res.json());
-    }
-    return Promise.reject(params);
-  });
+    data: params,
+  }).then((res) => handleUserResponse(res));
 };
 
 // 注册
 export const register = async (params: ISimpleUser) => {
-  return fetch(`${API_URL}/register`, {
+  return http("register", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(params),
-  }).then(async (res) => {
-    if (res.ok) {
-      return handleUserResponse(await res.json());
-    }
-    return Promise.reject(params);
-  });
+    data: params,
+  }).then((res) => handleUserResponse(res));
+
+  // return fetch(`${API_URL}/register`, {
+  //   method: "POST",
+  //   headers: {
+  //     "Content-Type": "application/json",
+  //   },
+  //   body: JSON.stringify(params),
+  // }).then(async (res) => {
+  //   if (res.ok) {
+  //     return handleUserResponse(await res.json());
+  //   }
+  //   return Promise.reject(params);
+  // });
 };
 
 // 退出

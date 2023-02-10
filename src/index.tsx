@@ -1,11 +1,10 @@
-import React from "react";
+import React, { FC } from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 import { DevTools, loadServer } from "jira-dev-tool";
 import { AppProvider } from "@context/index";
-
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
