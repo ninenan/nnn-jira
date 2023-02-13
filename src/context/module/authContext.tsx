@@ -2,7 +2,7 @@ import { http } from "@/helpers/http";
 import useAsync from "@/hooks/useAsync";
 import { ISimpleUser, IUser } from "@/typings";
 import * as auth from "@helpers/auth";
-import React, { createContext, PropsWithChildren, useEffect } from "react";
+import React, { createContext, FC, PropsWithChildren, useEffect } from "react";
 import { DevTools } from "jira-dev-tool";
 import { Spin } from "antd";
 
@@ -53,9 +53,9 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  if (isLoading || isInitial) {
+  const FullScreen: FC<PropsWithChildren> = ({ children }) => {
     return (
-      <p
+      <div
         style={{
           height: "100vh",
           display: "flex",
@@ -63,16 +63,25 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
           justifyContent: "center",
         }}
       >
+        {children}
+      </div>
+    );
+  };
+
+  if (isLoading || isInitial) {
+    return (
+      <FullScreen>
         <Spin size="large" />
-      </p>
+      </FullScreen>
     );
   }
 
   if (isError || error) {
     return (
-      <div>
-        {error?.message} <DevTools />
-      </div>
+      <FullScreen>
+        {error?.message}
+        <DevTools />
+      </FullScreen>
     );
   }
 

@@ -1,4 +1,4 @@
-import { STORAGE, API_URL } from "@/constants";
+import { STORAGE } from "@/constants";
 import { IUser, ISimpleUser } from "@/typings";
 import { http } from "./http";
 
