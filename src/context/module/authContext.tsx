@@ -30,7 +30,6 @@ export const initUser = async () => {
 };
 
 export const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
-  // const [user, setUser] = useState<IUser | null>(null);
   const {
     data: user,
     error,
