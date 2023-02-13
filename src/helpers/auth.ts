@@ -15,31 +15,16 @@ export const handleUserResponse = ({ user }: { user: IUser }): IUser => {
 
 // 登录
 export const login = async (params: ISimpleUser) => {
-  return http("login", {
-    method: "POST",
-    data: params,
-  }).then((res) => handleUserResponse(res));
+  const res = await http("login", { method: "post", data: params });
+
+  return handleUserResponse(res);
 };
 
 // 注册
 export const register = async (params: ISimpleUser) => {
-  return http("register", {
-    method: "POST",
-    data: params,
-  }).then((res) => handleUserResponse(res));
+  const res = await http("register", { method: "post", data: params });
 
-  // return fetch(`${API_URL}/register`, {
-  //   method: "POST",
-  //   headers: {
-  //     "Content-Type": "application/json",
-  //   },
-  //   body: JSON.stringify(params),
-  // }).then(async (res) => {
-  //   if (res.ok) {
-  //     return handleUserResponse(await res.json());
-  //   }
-  //   return Promise.reject(params);
-  // });
+  return handleUserResponse(res);
 };
 
 // 退出

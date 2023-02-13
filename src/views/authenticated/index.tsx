@@ -9,7 +9,7 @@ import useProject from "./hooks/useProject";
 
 const Authenticated = () => {
   const [users, setUsers] = useState<IUser[]>([]);
-  const { list, isLoading } = useProject({ name: "" });
+  const { list, isLoading } = useProject();
   const http = useHttp();
 
   useEffect(() => {

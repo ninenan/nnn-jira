@@ -1,6 +1,7 @@
 import { API_URL } from "@/constants";
 import qs from "qs";
 import { logout } from "./auth";
+import { message } from "antd";
 
 interface ICustomRequestInit extends RequestInit {
   token?: string;
@@ -10,13 +11,20 @@ interface ICustomRequestInit extends RequestInit {
 export const errorHandleMap: Record<string, any> = {
   "401": async () => {
     await logout();
+    message.error({
+      content: "请先登录",
+    });
+
     window.location.reload();
     return Promise.reject({
-      message: "清先登录",
+      message: "请先登录",
     });
   },
   "400": async (res: Response) => {
     const data = await res.json();
+    message.error({
+      content: data.message,
+    });
 
     return Promise.reject(data);
   },
@@ -34,6 +42,10 @@ export const http = async (
     },
     ...customConfig,
   };
+
+  if (config.method) {
+    config.method = config.method?.toUpperCase();
+  }
 
   // 如果是 get 请求
   if (config.method?.toUpperCase() === "GET") {

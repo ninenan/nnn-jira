@@ -1,10 +1,12 @@
+import useAsync from "@/hooks/useAsync";
 import useAuth from "@hooks/useAuth";
 import { Button, Form, Input } from "antd";
 const Regiser = () => {
   const { register } = useAuth();
+  const { isLoading, run } = useAsync();
 
-  const handleSubmit = (val: { username: string; password: string }) => {
-    register(val);
+  const handleSubmit = async (val: { username: string; password: string }) => {
+    await run(register(val));
   };
 
   return (
@@ -23,7 +25,12 @@ const Regiser = () => {
           <Input placeholder="请输入密码" type="password" id="password" />
         </Form.Item>
         <Form.Item>
-          <Button type="primary" htmlType="submit" style={{ width: "100%" }}>
+          <Button
+            loading={isLoading}
+            type="primary"
+            htmlType="submit"
+            style={{ width: "100%" }}
+          >
             register
           </Button>
         </Form.Item>

@@ -1,12 +1,10 @@
 import { http } from "@/helpers/http";
+import useAsync from "@/hooks/useAsync";
 import { ISimpleUser, IUser } from "@/typings";
 import * as auth from "@helpers/auth";
-import React, {
-  createContext,
-  PropsWithChildren,
-  useEffect,
-  useState,
-} from "react";
+import React, { createContext, PropsWithChildren, useEffect } from "react";
+import { DevTools } from "jira-dev-tool";
+import { Spin } from "antd";
 
 export const AuthContext = createContext<
   | {
@@ -32,7 +30,16 @@ export const initUser = async () => {
 };
 
 export const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
-  const [user, setUser] = useState<IUser | null>(null);
+  // const [user, setUser] = useState<IUser | null>(null);
+  const {
+    data: user,
+    error,
+    isLoading,
+    isInitial,
+    isError,
+    run,
+    setData: setUser,
+  } = useAsync<IUser | null>();
 
   const login = (user: ISimpleUser) => auth.login(user).then(setUser);
   const register = (user: ISimpleUser) => auth.register(user).then(setUser);
@@ -40,12 +47,35 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
 
   useEffect(() => {
     const init = async () => {
-      const res = await initUser();
-      setUser(res);
+      run(initUser());
     };
 
     init();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  if (isLoading || isInitial) {
+    return (
+      <p
+        style={{
+          height: "100vh",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <Spin size="large" />
+      </p>
+    );
+  }
+
+  if (isError || error) {
+    return (
+      <div>
+        {error?.message} <DevTools />
+      </div>
+    );
+  }
 
   return (
     <AuthContext.Provider

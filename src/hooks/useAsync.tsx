@@ -12,7 +12,18 @@ const defaultState: State<null> = {
   error: null,
 };
 
-const useAsync = <T,>(initialState?: State<T>) => {
+const defaultConfig = {
+  throwError: false,
+};
+
+const useAsync = <T,>(
+  initialState?: State<T>,
+  initialConfig?: typeof defaultConfig
+) => {
+  const config = {
+    ...defaultConfig,
+    ...initialConfig,
+  };
   const [state, setState] = useState<State<T>>({
     ...defaultState,
     ...initialState,
@@ -38,6 +49,10 @@ const useAsync = <T,>(initialState?: State<T>) => {
       })
       .catch((error) => {
         setError(error);
+        if (config.throwError) {
+          // 这里需要抛出异步错误，否则外部捕获不多错误信息
+          return Promise.reject(error);
+        }
         return error;
       });
   };
@@ -48,6 +63,7 @@ const useAsync = <T,>(initialState?: State<T>) => {
     isError: state.status === "fail",
     isSuccess: state.status === "success",
     data: state.data,
+    error: state.error,
     setData,
     setError,
     run,
