@@ -19,7 +19,7 @@ const useProject = (param?: Partial<IProject>) => {
 
     init();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [param?.name, param?.personId]);
 
   return {
     list: data || [],

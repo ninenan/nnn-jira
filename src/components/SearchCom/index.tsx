@@ -5,19 +5,31 @@ import { IUser } from "@/typings";
 interface IProps {
   users: IUser[];
   styles?: CSSProperties;
+  searchParam: {
+    name?: string;
+    personId?: number;
+  };
+  onSearch: (param: IProps["searchParam"]) => void;
 }
 
 const { Search } = Input;
 const SearchCom: React.FC<PropsWithChildren<IProps>> = ({
   users,
   styles: style,
+  onSearch,
+  searchParam,
 }) => {
   const handleOnSearch = (val: string) => {
     console.log(val);
   };
 
   const handleChange = (val: string) => {
-    console.log(val);
+    const personId = users.find((user) => user.name === val)?.id;
+    console.log(users);
+    onSearch({
+      ...searchParam,
+      personId,
+    });
   };
 
   return (

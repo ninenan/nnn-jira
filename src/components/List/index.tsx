@@ -8,13 +8,23 @@ import styles from "./index.module.scss";
 // 直接在 antd 中的 table 组件的属性上添加一个 users 属性
 interface IProps extends TableProps<IProject> {
   users: IUser[];
+  searchParam: {
+    name?: string;
+    personId?: number;
+  };
+  onSearch: (param: IProps["searchParam"]) => void;
 }
 
 const List: React.FC<PropsWithChildren<IProps>> = ({ users, ...restProps }) => {
   return (
     <div className={styles.container}>
       <h1>项目列表</h1>
-      <SearchCom users={users} styles={{ marginBottom: "2rem" }} />
+      <SearchCom
+        searchParam={restProps.searchParam}
+        onSearch={restProps.onSearch}
+        users={users}
+        styles={{ marginBottom: "2rem" }}
+      />
       <Table
         pagination={false}
         rowKey={"id"}

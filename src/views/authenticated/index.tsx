@@ -1,15 +1,20 @@
 import { useEffect, useState } from "react";
 import useHttp from "@hooks/useHttp";
-import { IUser } from "@/typings";
+import { IProject, IUser } from "@/typings";
 import { ReactComponent as SoftwareLogo } from "@assets/img/software-logo.svg";
 import List from "@components/List";
 import UserTem from "./components/UserTem";
 import styles from "./index.module.scss";
 import useProject from "./hooks/useProject";
+import { cleanObj } from "@/helpers/utils";
 
 const Authenticated = () => {
   const [users, setUsers] = useState<IUser[]>([]);
-  const { list, isLoading } = useProject();
+  const [param, setParam] = useState<Partial<IProject>>({
+    name: "",
+    personId: 0,
+  });
+  const { list, isLoading } = useProject(cleanObj(param));
   const http = useHttp();
 
   useEffect(() => {
@@ -34,7 +39,13 @@ const Authenticated = () => {
           </div>
           <UserTem />
         </header>
-        <List dataSource={list} users={users} loading={isLoading} />
+        <List
+          onSearch={setParam}
+          searchParam={param}
+          dataSource={list}
+          users={users}
+          loading={isLoading}
+        />
       </div>
     </div>
   );
