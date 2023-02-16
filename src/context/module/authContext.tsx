@@ -2,9 +2,9 @@ import { http } from "@/helpers/http";
 import useAsync from "@/hooks/useAsync";
 import { ISimpleUser, IUser } from "@/typings";
 import * as auth from "@helpers/auth";
-import React, { createContext, FC, PropsWithChildren, useEffect } from "react";
-import { DevTools } from "jira-dev-tool";
-import { Spin } from "antd";
+import React, { createContext, PropsWithChildren, useEffect } from "react";
+import FullScreenErrorFallback from "@components/Base/FullScreenErrorFallback";
+import FullScreenLoading from "@components/Base/FullScreenLoading";
 
 export const AuthContext = createContext<
   | {
@@ -53,36 +53,12 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const FullScreen: FC<PropsWithChildren> = ({ children }) => {
-    return (
-      <div
-        style={{
-          height: "100vh",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        {children}
-      </div>
-    );
-  };
-
   if (isLoading || isInitial) {
-    return (
-      <FullScreen>
-        <Spin size="large" />
-      </FullScreen>
-    );
+    return <FullScreenLoading />;
   }
 
   if (isError || error) {
-    return (
-      <FullScreen>
-        {error?.message}
-        <DevTools />
-      </FullScreen>
-    );
+    return <FullScreenErrorFallback error={error} />;
   }
 
   return (

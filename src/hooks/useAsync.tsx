@@ -49,6 +49,7 @@ const useAsync = <T,>(
       })
       .catch((error) => {
         setError(error);
+        debugger;
         if (config.throwError) {
           // 这里需要抛出异步错误，否则外部捕获不多错误信息
           return Promise.reject(error);
