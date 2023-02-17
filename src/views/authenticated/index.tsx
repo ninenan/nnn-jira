@@ -29,16 +29,16 @@ const Authenticated = () => {
   }, []);
 
   return (
-    <div>
-      <div>
-        <header className={styles.header}>
-          <div className={styles.headerItemContainer}>
-            <SoftwareLogo width={"18rem"} />
-            <h2>项目</h2>
-            <h2>列表</h2>
-          </div>
-          <UserTem />
-        </header>
+    <>
+      <header className={styles.header}>
+        <div className={styles.headerItemContainer}>
+          <SoftwareLogo width={"18rem"} />
+          <h2>项目</h2>
+          <h2>列表</h2>
+        </div>
+        <UserTem />
+      </header>
+      <div className={styles.main}>
         <List
           onSearch={setParam}
           searchParam={param}
@@ -47,7 +47,7 @@ const Authenticated = () => {
           loading={isLoading}
         />
       </div>
-    </div>
+    </>
   );
 };
 

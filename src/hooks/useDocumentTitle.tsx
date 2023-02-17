@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 
 const useDocumentTitle = (title: string, isKeep = false) => {
+  // useRef 的值在整个生命周期内都不会发生改变
   const oldTitle = useRef(document.title).current;
 
   useEffect(() => {
@@ -23,6 +24,7 @@ const test = () => {
     num += 1;
     const message = `current num: ${num}`;
 
+    // 这里总是返回一个新的函数
     return function unmount() {
       console.log(message);
     };
