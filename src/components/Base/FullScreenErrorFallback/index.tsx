@@ -1,10 +1,7 @@
-import React, { PropsWithChildren } from "react";
 import FullScreen from "../FullScreen";
 import { DevTools } from "jira-dev-tool";
 
-const FullScreenErrorFallback: React.FC<
-  PropsWithChildren<{ error: Error | null }>
-> = ({ error }) => {
+const FullScreenErrorCallback = ({ error }: { error: Error | null }) => {
   return (
     <FullScreen>
       {error?.message}
@@ -13,4 +10,4 @@ const FullScreenErrorFallback: React.FC<
   );
 };
 
-export default FullScreenErrorFallback;
+export default FullScreenErrorCallback;

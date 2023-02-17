@@ -3,7 +3,7 @@ import useAsync from "@/hooks/useAsync";
 import { ISimpleUser, IUser } from "@/typings";
 import * as auth from "@helpers/auth";
 import React, { createContext, PropsWithChildren, useEffect } from "react";
-import FullScreenErrorFallback from "@components/Base/FullScreenErrorFallback";
+import FullScreenErrorCallback from "@components/Base/FullScreenErrorFallback";
 import FullScreenLoading from "@components/Base/FullScreenLoading";
 
 export const AuthContext = createContext<
@@ -58,7 +58,7 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
   }
 
   if (isError || error) {
-    return <FullScreenErrorFallback error={error} />;
+    return <FullScreenErrorCallback error={error} />;
   }
 
   return (
