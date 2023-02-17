@@ -16,4 +16,34 @@ const useDocumentTitle = (title: string, isKeep = false) => {
   }, [isKeep, oldTitle]);
 };
 
+const test = () => {
+  let num = 0;
+
+  const effect = () => {
+    num += 1;
+    const message = `current num: ${num}`;
+
+    return function unmount() {
+      console.log(message);
+    };
+  };
+
+  return effect;
+};
+
+// 返回 effect 函数
+const add = test();
+
+// 返回引用了 message1 的 unmount 函数
+const unmount = add();
+// 再一次执行 effect 函数，返回引用了 message2 的 unmount 函数
+const unmount1 = add();
+unmount1(); // current num: 2
+// 再一次执行 effect 函数，返回引用了 message3 的 unmount 函数
+add();
+// 再一次执行 effect 函数，返回引用了 message4 的 unmount 函数
+add();
+
+unmount(); // current num: 1
+
 export default useDocumentTitle;
