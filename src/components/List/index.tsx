@@ -4,6 +4,7 @@ import SearchCom from "@components/SearchCom";
 import { IProject, IUser } from "@/typings";
 import dayjs from "dayjs";
 import styles from "./index.module.scss";
+import useDocumentTitle from "@/hooks/useDocumentTitle";
 
 // 直接在 antd 中的 table 组件的属性上添加一个 users 属性
 interface IProps extends TableProps<IProject> {
@@ -16,6 +17,7 @@ interface IProps extends TableProps<IProject> {
 }
 
 const List: React.FC<PropsWithChildren<IProps>> = ({ users, ...restProps }) => {
+  useDocumentTitle("项目列表", false);
   return (
     <div className={styles.container}>
       <h1>项目列表</h1>
