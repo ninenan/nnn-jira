@@ -1,10 +1,12 @@
+import { AppProvider } from "@context/index";
+import { DevTools, loadServer } from "jira-dev-tool";
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App";
+import { RouterProvider } from "react-router-dom";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
-import { DevTools, loadServer } from "jira-dev-tool";
-import { AppProvider } from "@context/index";
+import router from "@/routes";
+
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
@@ -13,7 +15,7 @@ loadServer(() => {
   root.render(
     <AppProvider>
       <React.StrictMode>
-        <App />
+        <RouterProvider router={router}></RouterProvider>
         <DevTools />
       </React.StrictMode>
     </AppProvider>

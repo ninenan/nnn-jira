@@ -5,6 +5,7 @@ import { IProject, IUser } from "@/typings";
 import dayjs from "dayjs";
 import styles from "./index.module.scss";
 import useDocumentTitle from "@/hooks/useDocumentTitle";
+import { Link } from "react-router-dom";
 
 // 直接在 antd 中的 table 组件的属性上添加一个 users 属性
 interface IProps extends TableProps<IProject> {
@@ -34,6 +35,11 @@ const List: React.FC<PropsWithChildren<IProps>> = ({ users, ...restProps }) => {
           {
             title: "名称",
             dataIndex: "name",
+            render(_, record) {
+              return (
+                <Link to={`/projects/${String(record.id)}`}>{record.name}</Link>
+              );
+            },
           },
           {
             title: "部门",
