@@ -6,7 +6,7 @@ import useProject from "./hooks/useProject";
 import { cleanObj } from "@/helpers/utils";
 import List from "@components/List";
 
-const Projects = () => {
+const ProjectList = () => {
   const [users, setUsers] = useState<IUser[]>([]);
   const [param, setParam] = useState<Partial<IProject>>({
     name: "",
@@ -39,4 +39,4 @@ const Projects = () => {
   );
 };
 
-export default Projects;
+export default ProjectList;

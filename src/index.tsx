@@ -6,6 +6,10 @@ import { RouterProvider } from "react-router-dom";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 import router from "@/routes";
+import ErrorBoundary from "@components/Base/ErrorBoundary";
+import FullScreenErrorCallback from "@components/Base/FullScreenErrorFallback";
+import "antd/dist/reset.css";
+import "./App.css";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -13,12 +17,14 @@ const root = ReactDOM.createRoot(
 
 loadServer(() => {
   root.render(
-    <AppProvider>
-      <React.StrictMode>
-        <RouterProvider router={router}></RouterProvider>
-        <DevTools />
-      </React.StrictMode>
-    </AppProvider>
+    <ErrorBoundary fallbackRender={FullScreenErrorCallback}>
+      <AppProvider>
+        <React.StrictMode>
+          <RouterProvider router={router}></RouterProvider>
+          <DevTools />
+        </React.StrictMode>
+      </AppProvider>
+    </ErrorBoundary>
   );
 });
 
