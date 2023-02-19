@@ -46,7 +46,7 @@ Home.tsx
 import React from "react";
 import { Routes, Route, HashRouter } from "react-router-dom";
 
-const CCom = () => {
+const Home = () => {
   return (
     <div>
       <HashRouter>
@@ -64,7 +64,7 @@ const CCom = () => {
   );
 };
 
-export default CCom;
+export default Home;
 ```
 
 ### 嵌套路由
@@ -122,7 +122,7 @@ Home.tsx
 import React from "react";
 import { Routes, Route, Navigate, HashRouter } from "react-router-dom";
 
-const CCom = () => {
+const Home = () => {
   return (
     <div>
       <HashRouter>
@@ -140,10 +140,45 @@ const CCom = () => {
   );
 };
 
-export default CCom;
+export default Home;
 ```
 
 ### 路由跳转 && 传参
+
+#### 路由跳转方式
+
+1. `<Link to="/a">` 点击跳转
+2. `<NavLink to="/a" />` 点击跳转
+3. `<Navigate to="/a" />` 遇到组件就会跳转
+4. 编程式导航
+
+```typescript
+import { useNavigate } from "react-router-dom";
+const navigate = useNavigate();
+
+navigate("/a");
+navigate("/a", { replace: true });
+navigate({ pathname: "/c" });
+navigate({ pathname: "/c", search: "?id=1" });
+```
+
+#### 获取方式
+
+1. `useLocation`
+
+```typescript
+import { useLocation } from "react-router-dom";
+// location 当中会有 search 属性，可以直接获取到地址栏中的信息
+const location = useLocation();
+```
+
+2. `useSearchParams`
+
+```typescript
+import { useSearchParams } from "react-router-dom";
+// useSearchParams 当中返回的第一个就是地址栏中的属性
+const [usp] = useSearchParams();
+```
 
 ACom.tsx
 
@@ -190,7 +225,7 @@ Home.tsx
 import React from "react";
 import { Routes, Route, Navigate, HashRouter } from "react-router-dom";
 
-const CCom = () => {
+const Home = () => {
   return (
     <div>
       {/* 注意点 */}
@@ -208,7 +243,7 @@ const CCom = () => {
   );
 };
 
-export default CCom;
+export default Home;
 ```
 
 ## 移除的内容

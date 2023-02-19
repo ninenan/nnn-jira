@@ -1,7 +1,7 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import GridDemo from "@/views/gridDemo";
 import Project from "@/views/project";
-import Test from "@views/test";
+// import Test from "@views/test";
 import ErrorPage from "@views/errorPage";
 import ProjectList from "@views/projectList";
 import UnAuthenticated from "@views/unAuthenticated";
