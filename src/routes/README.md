@@ -149,35 +149,96 @@ export default Home;
 
 1. `<Link to="/a">` 点击跳转
 2. `<NavLink to="/a" />` 点击跳转
-3. `<Navigate to="/a" />` 遇到组件就会跳转
+3. `<Navigate to="/a/id:name" />` 遇到组件就会跳转 `id` 是必传，`name` 是可选
 4. 编程式导航
 
 ```typescript
 import { useNavigate } from "react-router-dom";
+import qs from "qs";
+
 const navigate = useNavigate();
 
 navigate("/a");
-navigate("/a", { replace: true });
+navigate("/a", { replace: true }); // 重定向
 navigate({ pathname: "/c" });
 navigate({ pathname: "/c", search: "?id=1" });
+navigate({ pathname: "/c", search: qs.stringify({ id: "1", name: "xxx" }) });
 ```
 
 #### 获取方式
 
-1. `useLocation`
+1. 问号传参（地址栏可见）
+
+   1. `useLocation`
+
+   ```typescript
+   import { useLocation, useNavigate } from "react-router-dom";
+
+   // 跳转方式
+   const navigate = useNavigate();
+   navigate({
+     pathname: "/c",
+     search: "?id=1&name:xxx",
+   });
+
+   // 获取方式
+   // location 当中会有 search 属性，可以直接获取到地址栏中的信息
+   const location = useLocation();
+   console.log(location.search); //  {id: 1, name: 'xxx'}
+   ```
+
+   2. `useSearchParams`
+
+   ```typescript
+   import { useSearchParams, useNavigate } from "react-router-dom";
+   import qs from "qs";
+
+   // 跳转方式
+   const navigate = useNavigate();
+   navigate({
+     pathname: "/c",
+     search: qs.stringify({
+       id: 1,
+       name: "xxx",
+     }),
+   });
+
+   // 获取方式
+   // useSearchParams 当中返回的第一个就是地址栏中的属性
+   const [usp] = useSearchParams();
+   console.log(usp); // {id: 1, name: 'xxx'}
+   ```
+
+2. 路径传参（地址栏可见）
 
 ```typescript
-import { useLocation } from "react-router-dom";
-// location 当中会有 search 属性，可以直接获取到地址栏中的信息
-const location = useLocation();
+import { useParams, Route, useNavigate } from "react-router-dom";
+
+// 路由中的配置
+<Route to="/c/id:name" />;
+
+// 跳装方式
+const navigate = useNavigate();
+navigate("/c/1/xxx");
+
+// 获取方式
+const params = useParams();
+console.log(params); // {id: 1, name: xxx}
 ```
 
-2. `useSearchParams`
+4. 隐式传参（地址栏不可见，但是也会一直保持信息）
 
 ```typescript
-import { useSearchParams } from "react-router-dom";
-// useSearchParams 当中返回的第一个就是地址栏中的属性
-const [usp] = useSearchParams();
+import { useNavigate, useLocation } from 'react-router-dom';
+
+// 跳转方式
+const navigate = usenavigate();
+navigate('/c', state: {id: 1, name: 'xxx'})
+
+// 获取方式
+const location = useLocation()
+console.log(location.state) //  {id: 1, name: 'xxx'}
+
 ```
 
 ACom.tsx
@@ -244,6 +305,194 @@ const Home = () => {
 };
 
 export default Home;
+```
+
+### 路由表及统一管理
+
+One.tsx
+
+```typescript
+import React from "react";
+
+const One = () => {
+  return <div>OneOneOneOneOneOneOne</div>;
+};
+
+export default One;
+```
+
+OneSon.tsx
+
+```typescript
+import React from "react";
+
+const OneSon = () => {
+  return <div>OneSon</div>;
+};
+
+export default OneSon;
+```
+
+Two.tsx
+
+```typescript
+import React from "react";
+
+const Two = () => {
+  return <div>Two</div>;
+};
+
+export default Two;
+```
+
+router.config.ts
+
+```typescript
+import { lazy } from "react";
+
+export interface IRoute {
+  name?: string;
+  path: string;
+  element: any;
+  meta?: Record<string, any>;
+  children?: IRoute[];
+}
+
+const routes: IRoute[] = [
+  {
+    path: "/one",
+    name: "one",
+    element: lazy(() => import("../views/one")),
+    children: [
+      {
+        path: "/one/oneSon",
+        name: "oneSon",
+        element: lazy(() => import("../views/oneSon")),
+      },
+    ],
+  },
+  {
+    path: "/two",
+    name: "two",
+    element: lazy(() => import("../views/two")),
+  },
+  {
+    path: "*",
+    element: lazy(() => import("../views/defaultPage")),
+  },
+];
+
+export default routes;
+```
+
+router.index.tsx
+
+```typescript
+import React, { Suspense } from "react";
+import {
+  useNavigate,
+  useLocation,
+  useParams,
+  useSearchParams,
+  Route,
+  Routes,
+} from "react-router-dom";
+import routes from "./config";
+import type { IRoute } from "./config";
+
+// 统一渲染组件：可以进行权限验证，登录状态校验处理，增加传递的路由信息...
+// 这里只要是 Routes 中的 Route 组件中 props 都会加上路由信息，保证了 class 组件的一致性，兼容老版本
+const Element = (props: Record<string, any>) => {
+  const { element: Component } = props;
+  const navigate = useNavigate();
+  const location = useLocation();
+  const params = useParams();
+  const [usp] = useSearchParams();
+
+  return (
+    <Component
+      navigate={navigate}
+      location={location}
+      params={params}
+      usp={usp}
+    />
+  );
+};
+
+// 递归创建路由
+const createRoute = (routes: IRoute[]) => {
+  return (
+    <>
+      {routes.map((item, index) => {
+        const { path, children = [] } = item;
+
+        return (
+          <Route key={index} path={path} element={<Element {...item} />}>
+            {Array.isArray(children) && children.length
+              ? createRoute(children)
+              : null}
+          </Route>
+        );
+      })}
+    </>
+  );
+};
+
+// 如果 Routes 中存在不是 Route 包裹的组件，可以使用以下方式来获取到对应的路由信息
+export const withRouter = (Component: any) => {
+  const HOC = (props: any) => {
+    const navigate = useNavigate();
+    const location = useLocation();
+    const params = useParams();
+    const [usp] = useSearchParams();
+
+    return (
+      <Component
+        {...props}
+        navigate={navigate}
+        location={location}
+        params={params}
+        usp={usp}
+      />
+    );
+  };
+
+  return HOC;
+};
+
+const RouterView = () => {
+  return (
+    <>
+      {/*当使用组件懒加载的时候，需要在外部增加 Suspense 组件，可以每个懒加载的地方，也可以是全局*/}
+      <Suspense fallback={<>loading</>}>
+        <Routes>{createRoute(routes)}</Routes>
+      </Suspense>
+    </>
+  );
+};
+
+export default RouterView;
+```
+
+App.tsx
+
+```typescript
+import { HashRouter } from "react-router-dom";
+import RouterView from "./router";
+
+export const ThemeContext = createContext(theme.light);
+
+function App() {
+  return (
+    <div className="App">
+      <HashRouter>
+        <RouterView />
+      </HashRouter>
+    </div>
+  );
+}
+
+export default App;
 ```
 
 ## 移除的内容

@@ -1,15 +1,24 @@
 import { Dropdown, MenuProps, Button } from "antd";
 import { DownOutlined } from "@ant-design/icons";
 import useAuth from "@/hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 
 const UserTem = () => {
   const { user, logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    await logout();
+    navigate({
+      pathname: "/login",
+    });
+  };
 
   const items: MenuProps["items"] = [
     {
       key: "1",
       label: (
-        <Button onClick={() => logout()} type="link">
+        <Button onClick={() => handleLogout()} type="link">
           登出
         </Button>
       ),

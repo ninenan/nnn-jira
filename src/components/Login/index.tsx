@@ -5,13 +5,15 @@ import useAsync from "@/hooks/useAsync";
 
 const Login = () => {
   const { login } = useAuth();
-  const { isLoading, run } = useAsync(undefined, { throwError: true });
+  const { isLoading, run } = useAsync(undefined, {
+    throwError: true,
+  });
   const [error, setError] = useState<Error>();
 
   const handleSubmit = async (val: { username: string; password: string }) => {
-    // 这是可以使用 trycatch 或者 catch
+    // 这里可以使用 trycatch 或者 catch
     try {
-      await run(login(val));
+      run(login(val));
     } catch (error) {
       setError(error as Error);
     }

@@ -20,12 +20,15 @@ const SearchCom: React.FC<PropsWithChildren<IProps>> = ({
   searchParam,
 }) => {
   const handleOnSearch = (val: string) => {
-    console.log(val);
+    onSearch({
+      ...searchParam,
+      name: val,
+    });
   };
 
-  const handleChange = (val: string) => {
+  const handleOnChange = (val: string) => {
     const personId = users.find((user) => user.name === val)?.id;
-    console.log(users);
+
     onSearch({
       ...searchParam,
       personId,
@@ -45,7 +48,7 @@ const SearchCom: React.FC<PropsWithChildren<IProps>> = ({
       <Form.Item>
         <Select
           style={{ width: 120 }}
-          onChange={handleChange}
+          onChange={handleOnChange}
           fieldNames={{
             label: "name",
             value: "name",

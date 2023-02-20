@@ -1,12 +1,26 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
-import GridDemo from "@/views/gridDemo";
-import Project from "@/views/project";
-// import Test from "@views/test";
-import ErrorPage from "@views/errorPage";
-import ProjectList from "@views/projectList";
-import UnAuthenticated from "@views/unAuthenticated";
-import DefaultPage from "@/views/defaultPage";
-import Authenticated from "@views/authenticated";
+import { lazy, Suspense } from "react";
+
+const UnAuthenticated = lazy(
+  /* webpackChunkName: "unAuthenticated" */ () =>
+    import("@views/unAuthenticated")
+);
+const ErrorPage = lazy(() => import("@views/errorPage"));
+const ProjectList = lazy(
+  () => import(/* webpackChunkName: "projectList" */ "@views/projectList")
+);
+const Project = lazy(
+  /* webpackChunkName: "project" */ () => import("@views/project")
+);
+const Authenticated = lazy(
+  /* webpackChunkName: "authenticated" */ () => import("@views/authenticated")
+);
+const DefaultPage = lazy(
+  /* webpackChunkName: "defaultPage" */ () => import("@views/defaultPage")
+);
+const GridDemo = lazy(
+  /* webpackChunkName: "gridDemo" */ () => import("@views/gridDemo")
+);
 
 const router = createBrowserRouter([
   {
@@ -14,24 +28,28 @@ const router = createBrowserRouter([
     element: <Authenticated />,
     errorElement: <ErrorPage />,
     children: [
-      {
-        path: "/",
-        element: <Navigate to="/projects" />,
-      },
+      // {
+      //   path: "/",
+      //   element: <Navigate to="/projects" />,
+      // },
       {
         path: "/projects",
         element: <ProjectList />,
       },
       {
         path: "/projects/:id",
-        element: <Project />,
+        element: (
+          <Suspense fallback={<h2>loading...</h2>}>
+            <Project />
+          </Suspense>
+        ),
       },
     ],
   },
   {
     path: "/test",
     // element: <Test />,
-    element: <Navigate to={{ pathname: "/projects", search: "?id=1" }} />,
+    element: <Navigate to={{ pathname: "/projects/1" }} />,
   },
   {
     path: "/gridDemo",
@@ -39,7 +57,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/login",
-    element: <UnAuthenticated />,
+    element: (
+      <Suspense fallback={<h2>loading...</h2>}>
+        <UnAuthenticated />
+      </Suspense>
+    ),
   },
   {
     path: "*",
