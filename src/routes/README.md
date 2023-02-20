@@ -362,10 +362,10 @@ const routes: IRoute[] = [
   {
     path: "/one",
     name: "one",
-    element: lazy(() => import("../views/one")),
+    element: lazy(() => import(/* webpackChunkName: "one" */ "../views/one")), // Network 可以看到对应加载的 one.chunk.js 文件
     children: [
       {
-        path: "/one/oneSon",
+        path: "/one/oneSon/:name/:height?/:weight?", // name是必传参数 height 和 weight 是可选参数
         name: "oneSon",
         element: lazy(() => import("../views/oneSon")),
       },

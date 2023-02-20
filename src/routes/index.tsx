@@ -28,13 +28,21 @@ const router = createBrowserRouter([
     element: <Authenticated />,
     errorElement: <ErrorPage />,
     children: [
-      // {
-      //   path: "/",
-      //   element: <Navigate to="/projects" />,
-      // },
+      {
+        index: true,
+        element: (
+          <Suspense fallback={<h2>loading...</h2>}>
+            <ProjectList />
+          </Suspense>
+        ),
+      },
       {
         path: "/projects",
-        element: <ProjectList />,
+        element: (
+          <Suspense fallback={<h2>loading...</h2>}>
+            <ProjectList />
+          </Suspense>
+        ),
       },
       {
         path: "/projects/:id",
@@ -48,7 +56,6 @@ const router = createBrowserRouter([
   },
   {
     path: "/test",
-    // element: <Test />,
     element: <Navigate to={{ pathname: "/projects/1" }} />,
   },
   {
@@ -68,5 +75,7 @@ const router = createBrowserRouter([
     element: <DefaultPage />,
   },
 ]);
+
+console.log(3333);
 
 export default router;
