@@ -5,7 +5,8 @@ import { IProject, IUser } from "@/typings";
 import dayjs from "dayjs";
 import styles from "./index.module.scss";
 import useDocumentTitle from "@/hooks/useDocumentTitle";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import qs from "qs";
 
 // 直接在 antd 中的 table 组件的属性上添加一个 users 属性
 interface IProps extends TableProps<IProject> {
@@ -19,6 +20,19 @@ interface IProps extends TableProps<IProject> {
 
 const List: React.FC<PropsWithChildren<IProps>> = ({ users, ...restProps }) => {
   useDocumentTitle("项目列表", false);
+  const navigate = useNavigate();
+
+  const handleToTest = () => {
+    debugger;
+    navigate({
+      pathname: "/test",
+      search: qs.stringify({
+        name: "xxx",
+        age: 28,
+      }),
+    });
+  };
+
   return (
     <div className={styles.container}>
       <h1>项目列表</h1>
@@ -49,7 +63,7 @@ const List: React.FC<PropsWithChildren<IProps>> = ({ users, ...restProps }) => {
             title: "负责人",
             render(_, project) {
               return (
-                <span>
+                <span onClick={() => handleToTest()}>
                   {users.find((user) => user.id === project.personId)?.name ||
                     "未知"}
                 </span>

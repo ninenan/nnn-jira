@@ -205,8 +205,8 @@ navigate({ pathname: "/c", search: qs.stringify({ id: "1", name: "xxx" }) });
 
    // 获取方式
    // useSearchParams 当中返回的第一个就是地址栏中的属性
-   const [usp] = useSearchParams();
-   console.log(usp); // {id: 1, name: 'xxx'}
+   const [searchParams] = useSearchParams();
+   console.log(qs.parse(searchParams.toString())); // {id: 1, name: 'xxx'}
    ```
 
 2. 路径传参（地址栏可见）
@@ -399,6 +399,7 @@ import {
 } from "react-router-dom";
 import routes from "./config";
 import type { IRoute } from "./config";
+import qs from "qs";
 
 // 统一渲染组件：可以进行权限验证，登录状态校验处理，增加传递的路由信息...
 // 这里只要是 Routes 中的 Route 组件中 props 都会加上路由信息，保证了 class 组件的一致性，兼容老版本
@@ -407,7 +408,8 @@ const Element = (props: Record<string, any>) => {
   const navigate = useNavigate();
   const location = useLocation();
   const params = useParams();
-  const [usp] = useSearchParams();
+  const [searchParams] = useSearchParams();
+  const usp = qs.parse(searchParams.toString());
 
   return (
     <Component
@@ -444,7 +446,8 @@ export const withRouter = (Component: any) => {
     const navigate = useNavigate();
     const location = useLocation();
     const params = useParams();
-    const [usp] = useSearchParams();
+    const [searchParams] = useSearchParams();
+    const usp = qs.parse(searchParams.toString());
 
     return (
       <Component

@@ -21,6 +21,9 @@ const DefaultPage = lazy(
 const GridDemo = lazy(
   /* webpackChunkName: "gridDemo" */ () => import("@views/gridDemo")
 );
+const Test = lazy(
+  /* webpackChunkName: "gridDemo" */ () => import("@views/test")
+);
 
 const router = createBrowserRouter([
   {
@@ -56,7 +59,12 @@ const router = createBrowserRouter([
   },
   {
     path: "/test",
-    element: <Navigate to={{ pathname: "/projects/1" }} />,
+    // element: <Navigate to={{ pathname: "/projects/1" }} />,
+    element: (
+      <Suspense fallback={<h2>loading...</h2>}>
+        <Test />
+      </Suspense>
+    ),
   },
   {
     path: "/gridDemo",
