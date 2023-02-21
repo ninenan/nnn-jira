@@ -1,9 +1,10 @@
-import { getContacts } from "@/contacts";
+import { getContact } from "@/contacts";
 import { IContact } from "@/typings";
 import { Form, useLoaderData } from "react-router-dom";
 
 export const loader = async ({ params }: any) => {
-  const contact = await getContacts(params.contactId);
+  const contact = await getContact(params.contactId);
+
   return {
     contact,
   };
@@ -11,14 +12,6 @@ export const loader = async ({ params }: any) => {
 
 export default function Contact() {
   const { contact } = useLoaderData() as { contact: IContact };
-  // const contact = {
-  //   first: "Your",
-  //   last: "Name",
-  //   avatar: "https://placekitten.com/g/200/200",
-  //   twitter: "your_handle",
-  //   notes: "Some notes",
-  //   favorite: true,
-  // };
 
   return (
     <div id="contact">
@@ -40,7 +33,10 @@ export default function Contact() {
 
         {contact.twitter && (
           <p>
-            <a target="_blank" href={`https://twitter.com/${contact.twitter}`}>
+            <a
+              target="noreferrer"
+              href={`https://twitter.com/${contact.twitter}`}
+            >
               {contact.twitter}
             </a>
           </p>

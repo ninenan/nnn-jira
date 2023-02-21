@@ -1,15 +1,17 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Contact, { loader as contactLoader } from "@/routes/contact";
+import { action as destroyAction } from "@/routes/destroy";
+import EditContact, { action as editAction } from "@/routes/edit";
+import ErrorPage from "@views/errorPage";
+import Index from "@/routes/index";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Root, {
-  loader as rootLoader,
   action as rootAction,
+  loader as rootLoader,
 } from "./routes/root";
-import { loader as contactLoader } from "@/routes/contact";
-import ErrorPage from "@views/errorPage";
-import Contact from "@/routes/contact";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -24,9 +26,25 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />, // 当页面出现错误的时候会使用当前的组件
     children: [
       {
-        path: "contacts/:contactId/:name?",
+        path: "contacts/:contactId",
         element: <Contact />,
         loader: contactLoader,
+      },
+      {
+        path: "contacts/:contactId/edit",
+        element: <EditContact />,
+        loader: contactLoader,
+        action: editAction,
+      },
+      {
+        path: "/contacts/:contactId/destroy",
+        action: destroyAction,
+        errorElement: <div>Oops! an error</div>,
+      },
+      // index 用于设置开始页面
+      {
+        index: true,
+        element: <Index />,
       },
     ],
   },
