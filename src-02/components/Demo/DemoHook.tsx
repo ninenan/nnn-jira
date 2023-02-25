@@ -1,5 +1,4 @@
-import React from "react";
-import useMousePositions from "../../hooks/useMousePositions";
+import useMousePositions from "@hooks/useMousePositions";
 
 export default function DemoHooks() {
   const position = useMousePositions();
