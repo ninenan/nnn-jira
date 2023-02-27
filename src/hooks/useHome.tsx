@@ -11,17 +11,6 @@ const useHome = (isSuccess: Boolean) => {
       });
     }
   }, [isSuccess, navigate]);
-  // const toHome = (isSuccess: boolean) => {
-  //   if (isSuccess) {
-  //     navigate({
-  //       pathname: "/",
-  //     });
-  //   }
-  // };
-  //
-  // return {
-  //   toHome,
-  // };
 };
 
 export default useHome;

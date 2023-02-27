@@ -1,19 +1,29 @@
+import { useState } from "react";
 import useAsync from "@/hooks/useAsync";
 import useAuth from "@hooks/useAuth";
 import useHome from "@hooks/useHome";
 import { Button, Form, Input } from "antd";
 const Regiser = () => {
   const { register } = useAuth();
-  const { isLoading, run, isSuccess } = useAsync();
+  const { isLoading, run, isSuccess } = useAsync(undefined, {
+    throwError: true,
+  });
+  const [error, setError] = useState<Error>();
 
-  const handleSubmit = (val: { username: string; password: string }) => {
-    run(register(val));
+  const handleSubmit = async (val: { username: string; password: string }) => {
+    try {
+      await run(register(val));
+    } catch (err) {
+      console.log("err", err);
+      setError(err as Error);
+    }
   };
 
   useHome(isSuccess);
 
   return (
     <div>
+      {error && error.message}
       <Form onFinish={handleSubmit}>
         <Form.Item
           name="username"

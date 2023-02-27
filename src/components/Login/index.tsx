@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Button, Form, Input } from "antd";
 import useAuth from "@hooks/useAuth";
 import useAsync from "@/hooks/useAsync";
@@ -6,15 +6,13 @@ import useHome from "@hooks/useHome";
 
 const Login = () => {
   const { login } = useAuth();
-  const { isLoading, run, isSuccess } = useAsync(undefined, {
-    throwError: true,
-  });
+  const { isLoading, run, isSuccess } = useAsync(undefined);
   const [error, setError] = useState<Error>();
 
-  const handleSubmit = (val: { username: string; password: string }) => {
+  const handleSubmit = async (val: { username: string; password: string }) => {
     // 这里可以使用 trycatch 或者 catch
     try {
-      run(login(val));
+      await run(login(val));
     } catch (error) {
       setError(error as Error);
     }
