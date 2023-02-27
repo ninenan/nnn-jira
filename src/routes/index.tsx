@@ -1,4 +1,4 @@
-import { createBrowserRouter, Navigate } from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
 import { lazy, Suspense } from "react";
 
 const UnAuthenticated = lazy(
@@ -28,7 +28,11 @@ const Test = lazy(
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Authenticated />,
+    element: (
+      <Suspense fallback={<h2>loading...</h2>}>
+        <Authenticated />
+      </Suspense>
+    ),
     errorElement: <ErrorPage />,
     children: [
       {
@@ -83,7 +87,5 @@ const router = createBrowserRouter([
     element: <DefaultPage />,
   },
 ]);
-
-console.log(3333);
 
 export default router;
