@@ -24,6 +24,12 @@ const GridDemo = lazy(
 const Test = lazy(
   /* webpackChunkName: "gridDemo" */ () => import("@views/test")
 );
+const KanBan = lazy(
+  /* webpackChunkName: "gridDemo" */ () => import("@views/kanban")
+);
+const Epic = lazy(
+  /* webpackChunkName: "gridDemo" */ () => import("@views/Epic")
+);
 
 const router = createBrowserRouter([
   {
@@ -58,6 +64,24 @@ const router = createBrowserRouter([
             <Project />
           </Suspense>
         ),
+        children: [
+          {
+            path: "kanban",
+            element: (
+              <Suspense fallback={<h2>loading...</h2>}>
+                <KanBan />
+              </Suspense>
+            ),
+          },
+          {
+            path: "epic",
+            element: (
+              <Suspense fallback={<h2>loading...</h2>}>
+                <Epic />
+              </Suspense>
+            ),
+          },
+        ],
       },
     ],
   },

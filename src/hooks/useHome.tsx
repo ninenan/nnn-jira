@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useAuth from "@hooks/useAuth";
 import useAsync from "@hooks/useAsync";
+import useDocumentTitle from "@hooks/useDocumentTitle";
 
 const useHome = () => {
   const navigate = useNavigate();
@@ -10,6 +11,7 @@ const useHome = () => {
     throwError: true,
   });
   const [error, setError] = useState<Error>();
+  useDocumentTitle("请登录或者注册");
 
   const handleLogin = async (val: { username: string; password: string }) => {
     // 这里可以使用 trycatch 或者 catch
