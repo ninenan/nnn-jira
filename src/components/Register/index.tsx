@@ -1,24 +1,16 @@
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import useAsync from "@/hooks/useAsync";
 import useAuth from "@hooks/useAuth";
+import useHome from "@hooks/useHome";
 import { Button, Form, Input } from "antd";
 const Regiser = () => {
   const { register } = useAuth();
   const { isLoading, run, isSuccess } = useAsync();
-  const navigate = useNavigate();
 
   const handleSubmit = (val: { username: string; password: string }) => {
     run(register(val));
   };
 
-  useEffect(() => {
-    if (isSuccess && navigate) {
-      navigate({
-        pathname: "/",
-      });
-    }
-  }, [isSuccess, navigate]);
+  useHome(isSuccess);
 
   return (
     <div>

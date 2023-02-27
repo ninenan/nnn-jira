@@ -1,12 +1,11 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { Button, Form, Input } from "antd";
 import useAuth from "@hooks/useAuth";
 import useAsync from "@/hooks/useAsync";
+import useHome from "@hooks/useHome";
 
 const Login = () => {
   const { login } = useAuth();
-  const navigate = useNavigate();
   const { isLoading, run, isSuccess } = useAsync(undefined, {
     throwError: true,
   });
@@ -21,13 +20,7 @@ const Login = () => {
     }
   };
 
-  useEffect(() => {
-    if (isSuccess && navigate) {
-      navigate({
-        pathname: "/",
-      });
-    }
-  }, [isSuccess, navigate]);
+  useHome(isSuccess);
 
   return (
     <div>
