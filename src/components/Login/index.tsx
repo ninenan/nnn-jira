@@ -1,29 +1,13 @@
-import { useState } from "react";
 import { Button, Form, Input } from "antd";
-import useAuth from "@hooks/useAuth";
-import useAsync from "@/hooks/useAsync";
 import useHome from "@hooks/useHome";
 
 const Login = () => {
-  const { login } = useAuth();
-  const { isLoading, run, isSuccess } = useAsync(undefined);
-  const [error, setError] = useState<Error>();
-
-  const handleSubmit = async (val: { username: string; password: string }) => {
-    // 这里可以使用 trycatch 或者 catch
-    try {
-      await run(login(val));
-    } catch (error) {
-      setError(error as Error);
-    }
-  };
-
-  useHome(isSuccess);
+  const { handleLogin, error, isLoading } = useHome();
 
   return (
     <div>
       {error && error.message}
-      <Form onFinish={handleSubmit}>
+      <Form onFinish={handleLogin}>
         <Form.Item
           name="username"
           rules={[{ required: true, message: "请输入用户名" }]}
