@@ -25,11 +25,9 @@ const Test = lazy(
   /* webpackChunkName: "gridDemo" */ () => import("@views/test")
 );
 const KanBan = lazy(
-  /* webpackChunkName: "gridDemo" */ () => import("@views/kanban")
+  /* webpackChunkName: "kanban" */ () => import("@views/kanban")
 );
-const Epic = lazy(
-  /* webpackChunkName: "gridDemo" */ () => import("@views/Epic")
-);
+const Epic = lazy(/* webpackChunkName: "epic" */ () => import("@views/epic"));
 
 const router = createBrowserRouter([
   {

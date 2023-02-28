@@ -21,3 +21,5 @@ export interface IProject {
   ownerId: number;
   personId: number;
 }
+
+export type NoopType = () => void;

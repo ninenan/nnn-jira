@@ -1,3 +1,4 @@
+import { NoopType } from "@/typings";
 import { useState } from "react";
 
 interface State<T> {
@@ -39,12 +40,13 @@ const useAsync = <T,>(
   const setError = (error: Error) =>
     setState({ status: "fail", error, data: null });
 
-  const run = async (promise: Promise<T>) => {
+  const run = async (promise: Promise<T>, callback?: NoopType) => {
     setState({ ...state, status: "pending" });
 
     return promise
       .then((res) => {
         setData(res);
+        if (callback) callback();
         return res;
       })
       .catch((error) => {

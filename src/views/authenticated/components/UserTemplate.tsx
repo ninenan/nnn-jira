@@ -5,7 +5,7 @@ import useAuth from "@/hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import useAsync from "@hooks/useAsync";
 
-const UserTem = () => {
+const UserTemplate = () => {
   const { user, logout } = useAuth();
   const { run, isSuccess } = useAsync(undefined, {
     throwError: true,
@@ -47,4 +47,4 @@ const UserTem = () => {
   );
 };
 
-export default UserTem;
+export default UserTemplate;
