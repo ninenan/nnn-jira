@@ -2,3 +2,10 @@
   display: flex;
   overflow: hidden;
 }
+
+.container {
+  padding: 3.2rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}

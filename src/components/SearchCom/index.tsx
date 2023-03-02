@@ -1,14 +1,14 @@
 import { Input, Select, Form } from "antd";
 import { CSSProperties, PropsWithChildren } from "react";
-import { IUser } from "@/typings";
+import { IUser, IProject } from "@/typings";
+import IdSelect from "@components/IdSelect";
+
+export type ISearchParams = Partial<Pick<IProject, "name" | "personId">>;
 
 interface IProps {
   users: IUser[];
   styles?: CSSProperties;
-  searchParam: {
-    name?: string;
-    personId?: number;
-  };
+  searchParam: ISearchParams;
   onSearch: (param: IProps["searchParam"]) => void;
 }
 
@@ -26,12 +26,10 @@ const SearchCom: React.FC<PropsWithChildren<IProps>> = ({
     });
   };
 
-  const handleOnChange = (val: string) => {
-    const personId = users.find((user) => user.name === val)?.id;
-
+  const handleOnChange = (val: number | undefined) => {
     onSearch({
       ...searchParam,
-      personId,
+      personId: val,
     });
   };
 
@@ -43,17 +41,26 @@ const SearchCom: React.FC<PropsWithChildren<IProps>> = ({
           placeholder="请输入项目名"
           onSearch={handleOnSearch}
           style={{ width: 200 }}
+          defaultValue={searchParam.name}
         />
       </Form.Item>
       <Form.Item>
-        <Select
+        {/* <Select
           style={{ width: 120 }}
           onChange={handleOnChange}
           fieldNames={{
             label: "name",
-            value: "name",
+            value: "id",
           }}
           options={users}
+          defaultValue={+searchParam.personId!}
+        /> */}
+        <IdSelect
+          defaultOptionName="负责人"
+          style={{ width: 120 }}
+          onChange={handleOnChange}
+          options={users}
+          defaultValue={searchParam.personId || 0}
         />
       </Form.Item>
     </Form>

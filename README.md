@@ -87,3 +87,7 @@ package.json
 
 - 内容出发：现有内容，才布局，根据内容自己的大小显示布局
 - 布局出发：先布局，内容根据布局来显示
+
+### [why-did-you-render](https://www.npmjs.com/package/@welldone-software/why-did-you-render)
+
+用于查看你的组件为什么会都次渲染

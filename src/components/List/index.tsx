@@ -7,14 +7,12 @@ import styles from "./index.module.scss";
 import useDocumentTitle from "@/hooks/useDocumentTitle";
 import { Link, useNavigate } from "react-router-dom";
 import qs from "qs";
+import type { ISearchParams } from "@components/SearchCom";
 
 // 直接在 antd 中的 table 组件的属性上添加一个 users 属性
 interface IProps extends TableProps<IProject> {
   users: IUser[];
-  searchParam: {
-    name?: string;
-    personId?: number;
-  };
+  searchParam: ISearchParams;
   onSearch: (param: IProps["searchParam"]) => void;
 }
 
