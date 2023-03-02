@@ -17,7 +17,7 @@ const defaultConfig = {
   throwError: false,
 };
 
-const useAsync = <T,>(
+const useAsync = <T>(
   initialState?: State<T>,
   initialConfig?: typeof defaultConfig
 ) => {

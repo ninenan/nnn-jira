@@ -5,6 +5,7 @@ import styles from "./index.module.scss";
 import useProject from "./hooks/useProject";
 import { cleanObj } from "@/helpers/utils";
 import List from "@components/List";
+// import useUrlQueryParam from "@hooks/useUrlQueryParam";
 
 const ProjectList = () => {
   const [users, setUsers] = useState<IUser[]>([]);
@@ -14,6 +15,7 @@ const ProjectList = () => {
   });
   const { list, isLoading } = useProject(cleanObj(param));
   const http = useHttp();
+  // const [val] = useUrlQueryParam(["name", "persongId"]);
 
   useEffect(() => {
     const init = async () => {
