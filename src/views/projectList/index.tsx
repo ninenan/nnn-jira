@@ -10,7 +10,7 @@ import styles from "./index.module.scss";
 // import type { ISearchParams } from "@components/SearchCom";
 import { cleanObj } from "@/helpers/utils";
 import useHttp from "@hooks/useHttp";
-import { useProject, useEditProject } from "./hooks/useProject";
+import { useProjects, useEditProject } from "./hooks/useProject";
 import useProjectsSearchParams from "./hooks/useProjectsSearchParams";
 import Pin from "@components/Base/Pin";
 
@@ -26,16 +26,18 @@ const List: FC = () => {
   useDocumentTitle("项目列表", false);
   const [users, setUsers] = useState<IUser[]>([]);
   const [param, setParam] = useProjectsSearchParams();
-  const { list, isLoading } = useProject(
-    useMemo(() => cleanObj(param), [param])
-  );
+  const {
+    data: list,
+    isLoading,
+    retry,
+  } = useProjects(useMemo(() => cleanObj(param), [param]));
   const http = useHttp();
   const navigate = useNavigate();
   const { mutate } = useEditProject();
-  const pinProject = (id: number) => (pin: boolean) => mutate({ id, pin });
+  const pinProject = (id: number) => (pin: boolean) =>
+    mutate({ id, pin }).then(retry);
 
   const handleToTest = () => {
-    debugger;
     navigate({
       pathname: "/test",
       search: qs.stringify({
@@ -71,8 +73,7 @@ const List: FC = () => {
         rowKey={"id"}
         columns={[
           {
-            // title: <Pin checked={true} disabled={true}></Pin>,
-            title: "关注",
+            title: <Pin checked={true} disabled={true}></Pin>,
             render(_, project) {
               return (
                 <Pin
@@ -115,7 +116,7 @@ const List: FC = () => {
           },
         ]}
         loading={isLoading}
-        dataSource={list}
+        dataSource={list || []}
       />
     </div>
   );

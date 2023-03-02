@@ -1,5 +1,5 @@
 import { NoopType } from "@/typings";
-import { useState } from "react";
+import { useCallback, useId, useState } from "react";
 
 interface State<T> {
   status: "fail" | "success" | "initial" | "pending";
@@ -29,35 +29,55 @@ const useAsync = <T>(
     ...defaultState,
     ...initialState,
   });
+  // useState 直接传入函数，会惰性初始化，因此，要使用 useState 保存函数，不能直接传入函数
+  const [retry, setRetry] = useState(() => () => {});
 
-  const setData = (data: T) =>
-    setState({
-      data,
-      status: "success",
-      error: null,
-    });
+  const setData = useCallback(
+    (data: T) =>
+      setState({
+        data,
+        status: "success",
+        error: null,
+      }),
+    []
+  );
 
-  const setError = (error: Error) =>
-    setState({ status: "fail", error, data: null });
+  const setError = useCallback(
+    (error: Error) => setState({ status: "fail", error, data: null }),
+    []
+  );
 
-  const run = async (promise: Promise<T>, callback?: NoopType) => {
-    setState({ ...state, status: "pending" });
-
-    return promise
-      .then((res) => {
-        setData(res);
-        if (callback) callback();
-        return res;
-      })
-      .catch((error) => {
-        setError(error);
-        if (config.throwError) {
-          // 这里需要抛出异步错误，否则外部捕获不多错误信息
-          return Promise.reject(error);
+  const run = useCallback(
+    async (
+      promise: Promise<T>,
+      callback?: NoopType,
+      runConfig?: { retry: () => Promise<T> }
+    ) => {
+      // 保存上一个请求的函数
+      setRetry(() => () => {
+        if (runConfig?.retry) {
+          run(runConfig?.retry(), undefined, runConfig);
         }
-        return error;
       });
-  };
+      setState((prev) => ({ ...prev, status: "pending" }));
+
+      return promise
+        .then((res) => {
+          setData(res);
+          if (callback) callback();
+          return res;
+        })
+        .catch((error) => {
+          setError(error);
+          if (config.throwError) {
+            // 这里需要抛出异步错误，否则外部捕获不多错误信息
+            return Promise.reject(error);
+          }
+          return error;
+        });
+    },
+    [config.throwError, setData, setError]
+  );
 
   return {
     isInitial: state.status === "initial",
@@ -69,6 +89,7 @@ const useAsync = <T>(
     setData,
     setError,
     run,
+    retry,
   };
 };
 
