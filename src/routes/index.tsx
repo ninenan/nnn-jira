@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, Navigate } from "react-router-dom";
 import { lazy, Suspense } from "react";
 
 const UnAuthenticated = lazy(
@@ -64,7 +64,7 @@ const router = createBrowserRouter([
         ),
         children: [
           {
-            path: "kanban",
+            index: true,
             element: (
               <Suspense fallback={<h2>loading...</h2>}>
                 <KanBan />

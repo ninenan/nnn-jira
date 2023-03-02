@@ -10,7 +10,7 @@ const Project = () => {
     <div>
       <h1>Project</h1>
       <div>
-        <Link to="kanban">看板</Link>
+        <Link to="">看板</Link>
         <Link to="epic">任务组</Link>
       </div>
       <Outlet />

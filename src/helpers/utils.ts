@@ -18,6 +18,7 @@ export const cleanObj = (obj: Record<string, unknown>) => {
   return res;
 };
 
+// 不止会重置路由还会刷新整个页面
 export const resetRoute = () => {
   return (window.location.href = window.location.origin);
 };
