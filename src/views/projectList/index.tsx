@@ -1,17 +1,18 @@
-import { Table } from "antd";
-import { useState, useEffect, FC, useMemo } from "react";
-import SearchCom from "@components/SearchCom";
-import { IUser } from "@/typings";
-import dayjs from "dayjs";
-import styles from "./index.module.scss";
 import useDocumentTitle from "@/hooks/useDocumentTitle";
-import { Link, useNavigate } from "react-router-dom";
+import { IUser } from "@/typings";
+import SearchCom from "@components/SearchCom";
+import { Table } from "antd";
+import dayjs from "dayjs";
 import qs from "qs";
+import { FC, useEffect, useMemo, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import styles from "./index.module.scss";
 // import type { ISearchParams } from "@components/SearchCom";
-import useProjectsSearchParams from "./hooks/useProjectsSearchParams";
-import useProject from "./hooks/useProject";
 import { cleanObj } from "@/helpers/utils";
 import useHttp from "@hooks/useHttp";
+import { useProject, useEditProject } from "./hooks/useProject";
+import useProjectsSearchParams from "./hooks/useProjectsSearchParams";
+import Pin from "@components/Base/Pin";
 
 // 直接在 antd 中的 table 组件的属性上添加一个 users 属性
 // interface IProps extends TableProps<IProject> {
@@ -30,6 +31,8 @@ const List: FC = () => {
   );
   const http = useHttp();
   const navigate = useNavigate();
+  const { mutate } = useEditProject();
+  const pinProject = (id: number) => (pin: boolean) => mutate({ id, pin });
 
   const handleToTest = () => {
     debugger;
@@ -67,6 +70,18 @@ const List: FC = () => {
         pagination={false}
         rowKey={"id"}
         columns={[
+          {
+            // title: <Pin checked={true} disabled={true}></Pin>,
+            title: "关注",
+            render(_, project) {
+              return (
+                <Pin
+                  checked={project.pin}
+                  onCheckedChange={pinProject(project.id)}
+                />
+              );
+            },
+          },
           {
             title: "名称",
             dataIndex: "name",

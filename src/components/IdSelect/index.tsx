@@ -1,8 +1,10 @@
 import { CSSProperties, FC } from "react";
 import { Select } from "antd";
 import type { SelectProps } from "antd";
+import { DefaultOptionType } from "antd/es/select";
 
-// type SelectProps = React.Component<typeof Select>; // 也可以通过这种方式来获取组件的类型
+// 也可以通过这种方式来获取组件的类型
+// type SelectProps = React.ComponentProps<typeof Select>;
 
 interface IIdSelectProps
   extends Omit<SelectProps, "onChange" | "defaultValue" | "options"> {
@@ -22,7 +24,7 @@ const IdSelect: FC<IIdSelectProps> = (props) => {
     <Select
       onChange={(val) => onChange(toNumber(val) || undefined)}
       fieldNames={{ label: "name", value: "id" }}
-      options={options as any}
+      options={options as DefaultOptionType[] | undefined}
       defaultValue={defaultValue}
       {...restProps}
     ></Select>

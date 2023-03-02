@@ -3,8 +3,8 @@ import useAsync from "@hooks/useAsync";
 import { IProject } from "@/typings";
 import useHttp from "@hooks/useHttp";
 
-const useProject = (param?: Partial<IProject>) => {
-  const { data, isLoading, run } = useAsync<IProject[]>();
+export const useProject = (param?: Partial<IProject>) => {
+  const { data, run, ...restResult } = useAsync<IProject[]>();
   const http = useHttp();
 
   // 基本类型和组件状态可以放到依赖中
@@ -23,8 +23,48 @@ const useProject = (param?: Partial<IProject>) => {
 
   return {
     list: data || [],
-    isLoading,
+    ...restResult,
   };
 };
 
-export default useProject;
+export const useEditProject = () => {
+  const { run, ...restResult } = useAsync();
+  const http = useHttp();
+  const mutate = (params: Partial<IProject>) => {
+    return run(
+      http([
+        `projects/${params.id}`,
+        {
+          data: params,
+          method: "PATCH",
+        },
+      ])
+    );
+  };
+
+  return {
+    mutate,
+    ...restResult,
+  };
+};
+
+export const useAddProject = () => {
+  const { run, ...restResult } = useAsync();
+  const http = useHttp();
+  const mutate = (params: Partial<IProject>) => {
+    return run(
+      http([
+        `projects/${params.id}`,
+        {
+          data: params,
+          method: "POST",
+        },
+      ])
+    );
+  };
+
+  return {
+    mutate,
+    ...restResult,
+  };
+};

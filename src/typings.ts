@@ -20,6 +20,7 @@ export interface IProject {
   organization: string;
   ownerId: number;
   personId: number;
+  pin?: boolean;
 }
 
 export type NoopType = () => void;
