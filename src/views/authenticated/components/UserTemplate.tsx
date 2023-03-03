@@ -47,4 +47,9 @@ const UserTemplate = () => {
   );
 };
 
+// 为什么组件中的组件可以提出来放在当前组件的下方
+// 这里并不会不报错，因为没有执行 fn 函数
+// const fn = () => d
+// const d = '111'
+
 export default UserTemplate;

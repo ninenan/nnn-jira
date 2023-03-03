@@ -1,10 +1,15 @@
+import { useState } from "react";
+import { Button } from "antd";
 import { ReactComponent as SoftwareLogo } from "@assets/img/software-logo.svg";
 import UserTemplate from "./components/UserTemplate";
 import styles from "./index.module.scss";
 import { Outlet } from "react-router-dom";
-import { resetRoute } from "@/helpers/utils";
+import { resetRoute } from "@helpers/utils";
+import ProjectModal from "@components/ProjectModal";
 
 const Authenticated = () => {
+  const [isShowProjectModal, setIsShowProjectModal] = useState(false);
+
   return (
     <>
       <header className={styles.header}>
@@ -15,7 +20,12 @@ const Authenticated = () => {
         </div>
         <UserTemplate />
       </header>
+      <Button onClick={() => setIsShowProjectModal(true)}>showModal</Button>
       <Outlet />
+      <ProjectModal
+        isShowProjectModal={isShowProjectModal}
+        onClose={() => setIsShowProjectModal(false)}
+      />
     </>
   );
 };
