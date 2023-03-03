@@ -1,7 +1,8 @@
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import useAsync from "@hooks/useAsync";
 import { IProject } from "@/typings";
 import useHttp from "@hooks/useHttp";
+import useUrlQueryParam from "@hooks/useUrlQueryParam";
 
 export const useProjects = (param?: Partial<IProject>) => {
   const { run, ...restResult } = useAsync<IProject[]>();
@@ -15,7 +16,7 @@ export const useProjects = (param?: Partial<IProject>) => {
   // 非组件状态的对象，不可以放到依赖中
   // 因此这里的 param 包裹了一层 useMemo
   useEffect(() => {
-    run(fetchProjects(), undefined, { retry: fetchProjects });
+    run(fetchProjects(), { retry: fetchProjects });
     // run(fetchProjects());
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -66,4 +67,16 @@ export const useAddProject = () => {
     mutate,
     ...restResult,
   };
+};
+
+export const useProjectsSearchParams = () => {
+  const [param, setParam] = useUrlQueryParam(["name", "personId"]);
+
+  return [
+    useMemo(
+      () => ({ ...param, personId: +param.personId || undefined }),
+      [param]
+    ),
+    setParam,
+  ] as const;
 };

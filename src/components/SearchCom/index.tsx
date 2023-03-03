@@ -60,7 +60,7 @@ const SearchCom: React.FC<PropsWithChildren<IProps>> = ({
           style={{ width: 120 }}
           onChange={handleOnChange}
           options={users}
-          defaultValue={searchParam.personId || 0}
+          placeholder="负责人"
         />
       </Form.Item>
     </Form>

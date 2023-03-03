@@ -10,8 +10,11 @@ import styles from "./index.module.scss";
 // import type { ISearchParams } from "@components/SearchCom";
 import { cleanObj } from "@/helpers/utils";
 import useHttp from "@hooks/useHttp";
-import { useProjects, useEditProject } from "./hooks/useProject";
-import useProjectsSearchParams from "./hooks/useProjectsSearchParams";
+import {
+  useProjects,
+  useEditProject,
+  useProjectsSearchParams,
+} from "./hooks/useProject";
 import Pin from "@components/Base/Pin";
 
 // 直接在 antd 中的 table 组件的属性上添加一个 users 属性
@@ -50,7 +53,6 @@ const List: FC = () => {
   useEffect(() => {
     const init = async () => {
       http(["users"]).then((res) => {
-        res.push({ name: "负责人", id: 0 });
         setUsers(res);
       });
     };

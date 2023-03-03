@@ -1,5 +1,5 @@
-import { NoopType } from "@/typings";
-import { useCallback, useId, useState } from "react";
+import { useCallback, useState } from "react";
+import useMountedRef from "./useMountedRef";
 
 interface State<T> {
   status: "fail" | "success" | "initial" | "pending";
@@ -31,6 +31,7 @@ const useAsync = <T>(
   });
   // useState 直接传入函数，会惰性初始化，因此，要使用 useState 保存函数，不能直接传入函数
   const [retry, setRetry] = useState(() => () => {});
+  const { mountedRef } = useMountedRef();
 
   const setData = useCallback(
     (data: T) =>
@@ -48,24 +49,21 @@ const useAsync = <T>(
   );
 
   const run = useCallback(
-    async (
-      promise: Promise<T>,
-      callback?: NoopType,
-      runConfig?: { retry: () => Promise<T> }
-    ) => {
+    async (promise: Promise<T>, runConfig?: { retry: () => Promise<T> }) => {
       // 保存上一个请求的函数
       setRetry(() => () => {
         if (runConfig?.retry) {
-          run(runConfig?.retry(), undefined, runConfig);
+          run(runConfig?.retry(), runConfig);
         }
       });
       setState((prev) => ({ ...prev, status: "pending" }));
 
       return promise
         .then((res) => {
-          setData(res);
-          if (callback) callback();
-          return res;
+          if (mountedRef.current) {
+            setData(res);
+            return res;
+          }
         })
         .catch((error) => {
           setError(error);

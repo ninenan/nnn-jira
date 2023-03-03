@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useAuth from "@hooks/useAuth";
 import useAsync from "@hooks/useAsync";
@@ -16,11 +16,7 @@ const useHome = () => {
   const handleLogin = async (val: { username: string; password: string }) => {
     // 这里可以使用 trycatch 或者 catch
     try {
-      await run(login(val), () =>
-        navigate({
-          pathname: "/",
-        })
-      );
+      await run(login(val));
     } catch (error) {
       setError(error as Error);
     }
@@ -30,8 +26,16 @@ const useHome = () => {
     username: string;
     password: string;
   }) => {
-    run(register(val), () => navigate("/")).catch((error) => setError(error));
+    run(register(val)).catch((error) => setError(error));
   };
+
+  useEffect(() => {
+    if (isSuccess) {
+      navigate({
+        pathname: "/",
+      });
+    }
+  }, [isSuccess, navigate]);
 
   return {
     handleLogin,
