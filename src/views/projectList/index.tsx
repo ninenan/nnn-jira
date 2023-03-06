@@ -1,7 +1,7 @@
 import useDocumentTitle from "@/hooks/useDocumentTitle";
 import { IUser } from "@/typings";
 import SearchCom from "@components/SearchCom";
-import { Table } from "antd";
+import { Table, Row, Button } from "antd";
 import dayjs from "dayjs";
 import qs from "qs";
 import { FC, useEffect, useMemo, useState } from "react";
@@ -16,6 +16,7 @@ import {
   useProjectsSearchParams,
 } from "./hooks/useProject";
 import Pin from "@components/Base/Pin";
+import ProjectModal from "@components/ProjectModal";
 
 // 直接在 antd 中的 table 组件的属性上添加一个 users 属性
 // interface IProps extends TableProps<IProject> {
@@ -39,6 +40,7 @@ const List: FC = () => {
   const { mutate } = useEditProject();
   const pinProject = (id: number) => (pin: boolean) =>
     mutate({ id, pin }).then(retry);
+  const [isShowProjectModal, setIsShowProjectModal] = useState(false);
 
   const handleToTest = () => {
     navigate({
@@ -58,12 +60,16 @@ const List: FC = () => {
     };
 
     init();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [http]);
 
   return (
     <div className={styles.container}>
-      <h1>项目列表</h1>
+      <Row justify="space-between" align="middle">
+        <h1>项目列表</h1>
+        <Button onClick={() => setIsShowProjectModal(true)} type="link">
+          创建项目
+        </Button>
+      </Row>
       <SearchCom
         searchParam={param}
         onSearch={setParam}
@@ -119,6 +125,10 @@ const List: FC = () => {
         ]}
         loading={isLoading}
         dataSource={list || []}
+      />
+      <ProjectModal
+        isShowProjectModal={isShowProjectModal}
+        onClose={() => setIsShowProjectModal(false)}
       />
     </div>
   );

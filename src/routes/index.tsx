@@ -48,14 +48,6 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/projects",
-        element: (
-          <Suspense fallback={<h2>loading...</h2>}>
-            <ProjectList />
-          </Suspense>
-        ),
-      },
-      {
         path: "/projects/:id",
         element: (
           <Suspense fallback={<h2>loading...</h2>}>
