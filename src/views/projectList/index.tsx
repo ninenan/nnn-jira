@@ -7,6 +7,7 @@ import styles from "./index.module.scss";
 import useHttp from "@hooks/useHttp";
 import { useProjectsSearchParams } from "./hooks/useProject";
 import ProjectModal from "@components/ProjectModal";
+import ButtonProject from "@components/Base/ButtonProject";
 import List from "./components/List/index";
 
 const ProjectList: FC = () => {
@@ -30,9 +31,7 @@ const ProjectList: FC = () => {
     <div className={styles.container}>
       <Row justify="space-between" align="middle">
         <h1>项目列表</h1>
-        <Button onClick={() => setIsShowProjectModal(true)} type="link">
-          创建项目
-        </Button>
+        <ButtonProject onClick={() => setIsShowProjectModal(true)} />
       </Row>
       <SearchCom
         searchParam={param}
@@ -54,6 +53,14 @@ const ProjectList: FC = () => {
       />
     </div>
   );
+};
+// import Father from Father;
+// import {useState} from react;
+
+const App = () => {
+  const [user, setUser] = useState();
+
+  return <div>{/* <Father onClick={setUser}> */}</div>;
 };
 
 export default ProjectList;
