@@ -5,7 +5,7 @@ import { QueryClientProvider, QueryClient } from "react-query";
 export const AppProvider: React.FC<PropsWithChildren> = ({ children }) => {
   return (
     <QueryClientProvider client={new QueryClient()}>
-      <AuthProvider>{children}</AuthProvider>;
+      <AuthProvider>{children}</AuthProvider>
     </QueryClientProvider>
   );
 };

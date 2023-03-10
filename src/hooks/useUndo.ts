@@ -1,18 +1,22 @@
-import { useCallback, useReducer } from "react";
+import {
+  ReducerState,
+  ReducerWithoutAction,
+  useCallback,
+  useReducer,
+} from "react";
 
 type State<T> = {
   past: T[];
   future: T[];
   present: T;
 };
-
 type StateType = "UNDO" | "REDO" | "SET" | "RESET";
-
 type Action<T> = { newPresnet?: T; type: StateType };
 
 const undoReducer = <T>(state: State<T>, action: Action<T>) => {
   const { past, present, future } = state;
   const { type, newPresnet } = action;
+
   switch (type) {
     case "UNDO":
       if (past.length === 0) return state;
@@ -42,7 +46,7 @@ const undoReducer = <T>(state: State<T>, action: Action<T>) => {
       }
 
       return {
-        past: [...past, newPresnet],
+        past: [...past, present],
         present: newPresnet,
         future: [],
       };
@@ -57,12 +61,12 @@ const undoReducer = <T>(state: State<T>, action: Action<T>) => {
   }
 };
 
-export const useUndo = <T>(initialPresent: T) => {
+const useUndo = <T>(initialPresent: T) => {
   const [state, dispatch] = useReducer(undoReducer, {
     past: [],
     future: [],
     present: initialPresent,
-  } as State<T>);
+  });
 
   const canUndo = state.past.length !== 0;
   const canRedo = state.future.length !== 0;
@@ -83,3 +87,5 @@ export const useUndo = <T>(initialPresent: T) => {
 
   return [{ ...state }, { set, reset, undo, redo, canUndo, canRedo }] as const;
 };
+
+export default useUndo;

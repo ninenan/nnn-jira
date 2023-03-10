@@ -62,7 +62,7 @@ export const useUndo = <T>(initialPresent: T) => {
       }
 
       return {
-        past: [...past, newPresnet],
+        past: [...past, present],
         present: newPresnet,
         future: [],
       };
@@ -130,7 +130,7 @@ const undoReducer = <T>(state: State<T>, action: Action<T>) => {
       }
 
       return {
-        past: [...past, newPresnet],
+        past: [...past, present],
         present: newPresnet,
         future: [],
       };
