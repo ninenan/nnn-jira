@@ -54,13 +54,5 @@ const ProjectList: FC = () => {
     </div>
   );
 };
-// import Father from Father;
-// import {useState} from react;
-
-const App = () => {
-  const [user, setUser] = useState();
-
-  return <div>{/* <Father onClick={setUser}> */}</div>;
-};
 
 export default ProjectList;

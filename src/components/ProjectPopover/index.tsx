@@ -16,7 +16,7 @@ const ProjectPopver: FC<PropsWithChildren<IProps>> = ({ projectButton }) => {
     <div className={styles.listContainer}>
       <Typography>
         <Paragraph>收藏项目</Paragraph>
-        {pinnedProjects?.length && (
+        {pinnedProjects?.length ? (
           <List
             size="small"
             dataSource={pinnedProjects}
@@ -24,7 +24,7 @@ const ProjectPopver: FC<PropsWithChildren<IProps>> = ({ projectButton }) => {
               <List.Item style={{ marginLeft: 0 }}>{item.name}</List.Item>
             )}
           />
-        )}
+        ) : null}
         {projectButton}
       </Typography>
     </div>
