@@ -1,9 +1,4 @@
-import {
-  ReducerState,
-  ReducerWithoutAction,
-  useCallback,
-  useReducer,
-} from "react";
+import { useCallback, useReducer } from "react";
 
 type State<T> = {
   past: T[];
@@ -54,7 +49,7 @@ const undoReducer = <T>(state: State<T>, action: Action<T>) => {
       return {
         past: [],
         present: newPresnet,
-        future,
+        future: [],
       };
     default:
       return state;
@@ -81,7 +76,7 @@ const useUndo = <T>(initialPresent: T) => {
   );
 
   const reset = useCallback(
-    (newPresnet: T) => dispatch({ type: "SET", newPresnet }),
+    (newPresnet: T) => dispatch({ type: "RESET", newPresnet }),
     []
   );
 

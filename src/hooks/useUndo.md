@@ -165,7 +165,7 @@ export const useUndo = <T>(initialPresent: T) => {
   );
 
   const reset = useCallback(
-    (newPresnet: T) => dispatch({ type: "SET", newPresnet }),
+    (newPresnet: T) => dispatch({ type: "RESET", newPresnet }),
     []
   );
 
