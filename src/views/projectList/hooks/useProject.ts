@@ -20,9 +20,7 @@ export const useProjects = (param?: Partial<IProject>) => {
   // 因此这里的 param 包裹了一层 useMemo
   useEffect(() => {
     run(fetchProjects(), { retry: fetchProjects });
-    // run(fetchProjects());
   }, [param, run, http, fetchProjects]);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
 
   return {
     ...restResult,

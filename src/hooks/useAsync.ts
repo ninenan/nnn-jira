@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useReducer, useState } from "react";
 import useMountedRef from "./useMountedRef";
 
 interface State<T> {
@@ -17,6 +17,15 @@ const defaultConfig = {
   throwError: false,
 };
 
+const useSafeDispatch = <T>(dispatch: (...rest: T[]) => void) => {
+  const { mountedRef } = useMountedRef();
+
+  return useCallback(
+    (...rest: T[]) => (mountedRef.current ? dispatch(...rest) : void 0),
+    [dispatch, mountedRef]
+  );
+};
+
 const useAsync = <T>(
   initialState?: State<T>,
   initialConfig?: typeof defaultConfig
@@ -25,27 +34,35 @@ const useAsync = <T>(
     ...defaultConfig,
     ...initialConfig,
   };
-  const [state, setState] = useState<State<T>>({
-    ...defaultState,
-    ...initialState,
-  });
+
+  const [state, dispatch] = useReducer(
+    (state: State<T>, action: Partial<State<T>>) => {
+      console.log({ ...state }, { ...action });
+      return { ...state, ...action };
+    },
+    {
+      ...defaultState,
+      ...initialState,
+    }
+  );
+
+  const safeDispatch = useSafeDispatch(dispatch);
   // useState 直接传入函数，会惰性初始化，因此，要使用 useState 保存函数，不能直接传入函数
   const [retry, setRetry] = useState(() => () => {});
-  const { mountedRef } = useMountedRef();
 
   const setData = useCallback(
     (data: T) =>
-      setState({
+      safeDispatch({
         data,
         status: "success",
         error: null,
       }),
-    []
+    [safeDispatch]
   );
 
   const setError = useCallback(
-    (error: Error) => setState({ status: "fail", error, data: null }),
-    []
+    (error: Error) => safeDispatch({ status: "fail", error, data: null }),
+    [safeDispatch]
   );
 
   const run = useCallback(
@@ -56,14 +73,12 @@ const useAsync = <T>(
           run(runConfig?.retry(), runConfig);
         }
       });
-      setState((prev) => ({ ...prev, status: "pending" }));
+      safeDispatch({ status: "pending" });
 
       return promise
         .then((res) => {
-          if (mountedRef.current) {
-            setData(res);
-            return res;
-          }
+          setData(res);
+          return res;
         })
         .catch((error) => {
           setError(error);
@@ -74,7 +89,7 @@ const useAsync = <T>(
           return error;
         });
     },
-    [config.throwError, setData, setError, mountedRef]
+    [config.throwError, setData, setError, safeDispatch]
   );
 
   // 当依赖于非基本类型的值，基本都会包裹一层 useCallback 或者 useMemo，限制住页面渲染的时候重新创建

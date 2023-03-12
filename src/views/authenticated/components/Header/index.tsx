@@ -1,4 +1,4 @@
-import React, { ReactNode, FC } from "react";
+import { ReactNode, FC } from "react";
 import styles from "./index.module.scss";
 import ProjectPopover from "@components/ProjectPopover";
 import { ReactComponent as SoftwareLogo } from "@assets/img/software-logo.svg";

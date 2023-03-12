@@ -1,3 +1,5 @@
+# 学习 `useRducer`
+
 ### 1Version
 
 使用 `useState`
@@ -98,6 +100,7 @@ type StateType = "UNDO" | "REDO" | "SET" | "RESET";
 
 type Action<T> = { newPresnet?: T; type: StateType };
 
+// useReducer 中 state 是上一个值，action 是传递的参数
 const undoReducer = <T>(state: State<T>, action: Action<T>) => {
   const { past, present, future } = state;
   const { type, newPresnet } = action;
@@ -171,4 +174,34 @@ export const useUndo = <T>(initialPresent: T) => {
 
   return [{ ...state }, { set, reset, undo, redo, canUndo, canRedo }] as const;
 };
+```
+
+## 使用方式
+
+```typescript
+import { Button } from "antd";
+import useUndo from "@hooks/useUndo";
+
+const Test = () => {
+  const [state, { set, reset, undo, redo, canUndo, canRedo }] =
+    useUndo<number>(0);
+  let { present, future, past } = state as any;
+
+  return (
+    <div>
+      <div>一共点击了{present}次</div>
+      <Button type="primary" onClick={() => set(present + 1)}>
+        +
+      </Button> <Button type="primary" onClick={() => set(present - 1)}>
+        -
+      </Button> <Button type="primary" disabled={!canUndo} onClick={undo}>
+        undo
+      </Button> <Button type="primary" disabled={!canRedo} onClick={redo}>
+        redo
+      </Button> <Button onClick={() => reset(0)}>rest to 0</Button>
+    </div>
+  );
+};
+
+export default Test;
 ```
