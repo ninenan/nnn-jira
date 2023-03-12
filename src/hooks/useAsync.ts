@@ -36,10 +36,10 @@ const useAsync = <T>(
   };
 
   const [state, dispatch] = useReducer(
-    (state: State<T>, action: Partial<State<T>>) => {
-      console.log({ ...state }, { ...action });
-      return { ...state, ...action };
-    },
+    (state: State<T>, action: Partial<State<T>>) => ({
+      ...state,
+      ...action,
+    }),
     {
       ...defaultState,
       ...initialState,

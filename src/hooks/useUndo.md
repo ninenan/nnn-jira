@@ -1,5 +1,11 @@
 # 学习 `useRducer`
 
+## 什么时候使用 `useReducer`
+
+`useState` 可以做的操作，`useReducer` 也是可以做到的
+
+当要定义多个互相影响的值，最好使用 `useReducer`，可以简化代码，使代码看起来更加的合理
+
 ### 1Version
 
 使用 `useState`
