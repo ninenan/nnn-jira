@@ -9,7 +9,7 @@ const Test = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const params = useParams();
   const url = new URLSearchParams();
-  let { present, future, past } = state as any;
+  let { present, future, past } = state;
 
   console.log("present111: ", present);
   console.log(url);
@@ -18,7 +18,8 @@ const Test = () => {
 
   return (
     <div>
-      <div>333</div>
+      <div>future: {future}</div>
+      <div>past: {past}</div>
       <div>一共点击了{present}次</div>
       <Button type="primary" onClick={() => set(present + 1)}>
         +

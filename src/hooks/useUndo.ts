@@ -42,13 +42,13 @@ const undoReducer = <T>(state: State<T>, action: Action<T>) => {
 
       return {
         past: [...past, present],
-        present: newPresnet,
+        present: newPresnet as any,
         future: [],
       };
     case "RESET":
       return {
         past: [],
-        present: newPresnet,
+        present: newPresnet as any,
         future: [],
       };
     default:
@@ -57,7 +57,7 @@ const undoReducer = <T>(state: State<T>, action: Action<T>) => {
 };
 
 const useUndo = <T>(initialPresent: T) => {
-  const [state, dispatch] = useReducer(undoReducer, {
+  const [state, dispatch] = useReducer(undoReducer<T>, {
     past: [],
     future: [],
     present: initialPresent,
