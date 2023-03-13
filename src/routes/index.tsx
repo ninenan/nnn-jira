@@ -40,7 +40,8 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       {
-        index: true,
+        // index: true,
+        path: "/",
         element: (
           <Suspense fallback={<h2>loading...</h2>}>
             <ProjectList />

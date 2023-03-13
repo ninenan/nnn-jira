@@ -1,21 +1,24 @@
 import useDocumentTitle from "@/hooks/useDocumentTitle";
 import { IUser } from "@/typings";
 import SearchCom from "@components/SearchCom";
-import { Row, Button } from "antd";
+import { Row } from "antd";
 import { FC, useEffect, useState } from "react";
 import styles from "./index.module.scss";
 import useHttp from "@hooks/useHttp";
 import { useProjectsSearchParams } from "./hooks/useProject";
-import ProjectModal from "@components/ProjectModal";
+// import ProjectModal from "@components/ProjectModal";
 import ButtonProject from "@components/Base/ButtonProject";
 import List from "./components/List/index";
+import { useDispatch } from "react-redux";
+import { projecListActions } from "@views/projectList/store";
 
 const ProjectList: FC = () => {
   useDocumentTitle("项目列表", false);
+  const dispatch = useDispatch();
   const [users, setUsers] = useState<IUser[]>([]);
   const [param, setParam] = useProjectsSearchParams();
   const http = useHttp();
-  const [isShowProjectModal, setIsShowProjectModal] = useState(false);
+  // const [isShowProjectModal, setIsShowProjectModal] = useState(false);
 
   useEffect(() => {
     const init = async () => {
@@ -31,7 +34,9 @@ const ProjectList: FC = () => {
     <div className={styles.container}>
       <Row justify="space-between" align="middle">
         <h1>项目列表</h1>
-        <ButtonProject onClick={() => setIsShowProjectModal(true)} />
+        <ButtonProject
+          onClick={() => dispatch(projecListActions.openProjectModal())}
+        />
       </Row>
       <SearchCom
         searchParam={param}
@@ -39,18 +44,11 @@ const ProjectList: FC = () => {
         users={users}
         styles={{ marginBottom: "2rem" }}
       />
-      <List
-        users={users}
-        projectButton={
-          <Button onClick={() => setIsShowProjectModal(true)} type="link">
-            创建项目
-          </Button>
-        }
-      />
-      <ProjectModal
-        isShowProjectModal={isShowProjectModal}
-        onClose={() => setIsShowProjectModal(false)}
-      />
+      <List users={users} />
+      {/* <ProjectModal */}
+      {/*   isShowProjectModal={isShowProjectModal} */}
+      {/*   onClose={() => setIsShowProjectModal(false)} */}
+      {/* /> */}
     </div>
   );
 };

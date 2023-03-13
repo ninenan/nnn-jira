@@ -1,13 +1,12 @@
+import ButtonProject from "@components/Base/ButtonProject";
 import { Popover, Typography, List } from "antd";
 import { useProjects } from "@views/projectList/hooks/useProject";
 import styles from "./index.module.scss";
-import { FC, PropsWithChildren, ReactNode } from "react";
+import { useDispatch } from "react-redux";
+import { projecListActions } from "@views/projectList/store";
 
-interface IProps {
-  projectButton: ReactNode;
-}
-
-const ProjectPopver: FC<PropsWithChildren<IProps>> = ({ projectButton }) => {
+const ProjectPopver = () => {
+  const dispatch = useDispatch();
   const { Paragraph } = Typography;
   const { data: projects } = useProjects();
   const pinnedProjects = projects?.filter((item) => item.pin);
@@ -25,7 +24,10 @@ const ProjectPopver: FC<PropsWithChildren<IProps>> = ({ projectButton }) => {
             )}
           />
         ) : null}
-        {projectButton}
+
+        <ButtonProject
+          onClick={() => dispatch(projecListActions.openProjectModal())}
+        />
       </Typography>
     </div>
   );

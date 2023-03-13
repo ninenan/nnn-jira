@@ -1,18 +1,24 @@
-import React, { PropsWithChildren, FC } from "react";
 import { Drawer, Button } from "antd";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  projecListActions,
+  selectProjectModalVisible,
+} from "@/views/projectList/store";
 
-interface IProps {
-  isShowProjectModal: boolean;
-  onClose: () => void;
-}
-
-const ProjectModal: FC<IProps> = (props) => {
-  const { isShowProjectModal, onClose } = props;
+const ProjectModal = () => {
+  const dispatch = useDispatch();
+  const projectModalOpen = useSelector(selectProjectModalVisible);
 
   return (
-    <Drawer open={isShowProjectModal} width={"100%"} onClose={onClose}>
+    <Drawer
+      open={projectModalOpen}
+      width={"100%"}
+      onClose={() => dispatch(projecListActions.closeProjectModal())}
+    >
       <h1>project modal</h1>
-      <Button onClick={onClose}>close</Button>
+      <Button onClick={() => dispatch(projecListActions.closeProjectModal())}>
+        close
+      </Button>
     </Drawer>
   );
 };

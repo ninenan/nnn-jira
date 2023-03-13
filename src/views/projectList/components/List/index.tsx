@@ -1,4 +1,4 @@
-import { useMemo, PropsWithChildren, ReactNode, FC } from "react";
+import { useMemo, PropsWithChildren, FC } from "react";
 import { TableProps, Table, MenuProps, Button, Dropdown } from "antd";
 import {
   useProjects,
@@ -11,18 +11,16 @@ import type { IProject, IUser } from "@/typings";
 import { cleanObj } from "@helpers/utils";
 import qs from "qs";
 import dayjs from "dayjs";
+import { useDispatch } from "react-redux";
+import { projecListActions } from "@views/projectList/store";
 
 // 直接在 antd 中的 table 组件的属性上添加一个 users 属性
 interface IProps extends TableProps<IProject> {
   users: IUser[];
-  projectButton: ReactNode;
 }
 
-const List: FC<PropsWithChildren<IProps>> = ({
-  users,
-  projectButton,
-  ...restProps
-}) => {
+const List: FC<PropsWithChildren<IProps>> = ({ users, ...restProps }) => {
+  const dispatch = useDispatch();
   const [param] = useProjectsSearchParams();
   const {
     data: list,
@@ -47,7 +45,14 @@ const List: FC<PropsWithChildren<IProps>> = ({
   const menuItems: MenuProps["items"] = [
     {
       key: "edit",
-      label: projectButton,
+      label: (
+        <Button
+          type="link"
+          onClick={() => dispatch(projecListActions.openProjectModal())}
+        >
+          编辑
+        </Button>
+      ),
     },
   ];
 
@@ -101,7 +106,7 @@ const List: FC<PropsWithChildren<IProps>> = ({
           },
           {
             title: "操作",
-            render(value, project) {
+            render() {
               return (
                 <Dropdown menu={{ items: menuItems }}>
                   <Button type={"link"}>...</Button>
