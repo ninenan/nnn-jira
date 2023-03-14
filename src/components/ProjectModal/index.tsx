@@ -1,7 +1,7 @@
 import { Drawer, Button } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  projecListActions,
+  projectListActions,
   selectProjectModalVisible,
 } from "@/views/projectList/store";
 
@@ -13,10 +13,10 @@ const ProjectModal = () => {
     <Drawer
       open={projectModalOpen}
       width={"100%"}
-      onClose={() => dispatch(projecListActions.closeProjectModal())}
+      onClose={() => dispatch(projectListActions.closeProjectModal())}
     >
       <h1>project modal</h1>
-      <Button onClick={() => dispatch(projecListActions.closeProjectModal())}>
+      <Button onClick={() => dispatch(projectListActions.closeProjectModal())}>
         close
       </Button>
     </Drawer>

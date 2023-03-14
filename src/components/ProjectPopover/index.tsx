@@ -3,7 +3,7 @@ import { Popover, Typography, List } from "antd";
 import { useProjects } from "@views/projectList/hooks/useProject";
 import styles from "./index.module.scss";
 import { useDispatch } from "react-redux";
-import { projecListActions } from "@views/projectList/store";
+import { projectListActions } from "@views/projectList/store";
 
 const ProjectPopver = () => {
   const dispatch = useDispatch();
@@ -26,7 +26,7 @@ const ProjectPopver = () => {
         ) : null}
 
         <ButtonProject
-          onClick={() => dispatch(projecListActions.openProjectModal())}
+          onClick={() => dispatch(projectListActions.openProjectModal())}
         />
       </Typography>
     </div>

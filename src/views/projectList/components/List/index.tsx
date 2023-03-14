@@ -12,7 +12,7 @@ import { cleanObj } from "@helpers/utils";
 import qs from "qs";
 import dayjs from "dayjs";
 import { useDispatch } from "react-redux";
-import { projecListActions } from "@views/projectList/store";
+import { projectListActions } from "@views/projectList/store";
 
 // 直接在 antd 中的 table 组件的属性上添加一个 users 属性
 interface IProps extends TableProps<IProject> {
@@ -48,7 +48,7 @@ const List: FC<PropsWithChildren<IProps>> = ({ users, ...restProps }) => {
       label: (
         <Button
           type="link"
-          onClick={() => dispatch(projecListActions.openProjectModal())}
+          onClick={() => dispatch(projectListActions.openProjectModal())}
         >
           编辑
         </Button>

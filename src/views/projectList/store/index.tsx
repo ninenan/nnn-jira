@@ -9,8 +9,8 @@ const initialState: IState = {
   projectModalVisible: false,
 };
 
-export const projecListSlice = createSlice({
-  name: "projecListSlice",
+export const projectListSlice = createSlice({
+  name: "projectListSlice",
   initialState,
   reducers: {
     openProjectModal(state) {
@@ -22,6 +22,6 @@ export const projecListSlice = createSlice({
   },
 });
 
-export const projecListActions = projecListSlice.actions;
+export const projectListActions = projectListSlice.actions;
 export const selectProjectModalVisible = (state: RootState) =>
   state.projectList.projectModalVisible;

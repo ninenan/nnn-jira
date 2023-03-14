@@ -10,7 +10,7 @@ import { useProjectsSearchParams } from "./hooks/useProject";
 import ButtonProject from "@components/Base/ButtonProject";
 import List from "./components/List/index";
 import { useDispatch } from "react-redux";
-import { projecListActions } from "@views/projectList/store";
+import { projectListActions } from "@views/projectList/store";
 
 const ProjectList: FC = () => {
   useDocumentTitle("项目列表", false);
@@ -35,7 +35,7 @@ const ProjectList: FC = () => {
       <Row justify="space-between" align="middle">
         <h1>项目列表</h1>
         <ButtonProject
-          onClick={() => dispatch(projecListActions.openProjectModal())}
+          onClick={() => dispatch(projectListActions.openProjectModal())}
         />
       </Row>
       <SearchCom

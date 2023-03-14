@@ -1,8 +1,8 @@
-import { projecListSlice } from "@/views/projectList/store";
+import { projectListSlice } from "@/views/projectList/store";
 import { configureStore } from "@reduxjs/toolkit";
 
 export const rootReducer = {
-  projectList: projecListSlice.reducer,
+  projectList: projectListSlice.reducer,
 };
 
 export const store = configureStore({
