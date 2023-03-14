@@ -5,6 +5,8 @@ import * as auth from "@helpers/auth";
 import React, { createContext, PropsWithChildren, useEffect } from "react";
 import FullScreenErrorCallback from "@components/Base/FullScreenErrorFallback";
 import FullScreenLoading from "@components/Base/FullScreenLoading";
+import { useDispatch } from "react-redux";
+import { bootstrap } from "@/store/modules/auth";
 
 export const AuthContext = createContext<
   | {
@@ -30,28 +32,18 @@ export const initUser = async () => {
 };
 
 export const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
-  const {
-    data: user,
-    error,
-    isLoading,
-    isInitial,
-    isError,
-    run,
-    setData: setUser,
-  } = useAsync<IUser | null>();
+  const { error, isLoading, isInitial, isError, run } =
+    useAsync<IUser | null>();
 
-  const login = (user: ISimpleUser) => auth.login(user).then(setUser);
-  const register = (user: ISimpleUser) => auth.register(user).then(setUser);
-  const logout = () => auth.logout().then(() => setUser(null));
+  const dispatch: any = useDispatch();
 
   useEffect(() => {
     const init = async () => {
-      run(initUser());
+      run(dispatch(bootstrap()));
     };
 
     init();
-  }, []);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch, run]);
 
   if (isLoading || isInitial) {
     return <FullScreenLoading />;
@@ -61,10 +53,5 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
     return <FullScreenErrorCallback error={error} />;
   }
 
-  return (
-    <AuthContext.Provider
-      value={{ user, login, register, logout }}
-      children={children}
-    />
-  );
+  return <div>{children}</div>;
 };

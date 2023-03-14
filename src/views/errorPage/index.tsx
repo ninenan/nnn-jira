@@ -3,6 +3,7 @@ import { useRouteError } from "react-router";
 import styles from "./indes.module.scss";
 
 const ErrorPage = () => {
+  // useRouteError 可以捕获到当前页面的错误信息
   const routerError = useRouteError() as Error;
 
   return (
