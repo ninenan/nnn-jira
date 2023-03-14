@@ -17,6 +17,8 @@ export const authSlice = createSlice({
   initialState,
   reducers: {
     setUser(state, action) {
+      // action: {type: 'auth/setUser', payload: 传递的参数}
+      console.log("action: ", action);
       state.user = action.payload;
     },
   },
