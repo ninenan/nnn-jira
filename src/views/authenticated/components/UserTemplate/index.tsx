@@ -7,7 +7,7 @@ import useAsync from "@hooks/useAsync";
 
 const UserTemplate = () => {
   const { user, logout } = useAuth();
-  const { run, isSuccess } = useAsync(undefined, {
+  const { run } = useAsync(undefined, {
     throwError: true,
   });
 
@@ -18,12 +18,12 @@ const UserTemplate = () => {
   };
 
   useEffect(() => {
-    if (isSuccess && navigate) {
+    if (!user && navigate) {
       navigate({
         pathname: "/login",
       });
     }
-  }, [navigate, isSuccess]);
+  }, [user, navigate]);
 
   const items: MenuProps["items"] = [
     {

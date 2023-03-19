@@ -21,7 +21,6 @@ const List: React.FC<PropsWithChildren<IProps>> = ({ users, ...restProps }) => {
   const navigate = useNavigate();
 
   const handleToTest = () => {
-    debugger;
     navigate({
       pathname: "/test",
       search: qs.stringify({
