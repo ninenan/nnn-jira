@@ -1,31 +1,19 @@
 import useDocumentTitle from "@/hooks/useDocumentTitle";
-import { IUser } from "@/typings";
 import SearchCom from "@components/SearchCom";
 import { Row, Button } from "antd";
-import { FC, useEffect, useState } from "react";
+import { FC } from "react";
 import styles from "./index.module.scss";
-import useHttp from "@hooks/useHttp";
 import { useProjectModal, useProjectsSearchParams } from "./hooks/useProject";
 import ProjectModal from "@components/ProjectModal";
 import ButtonProject from "@components/Base/ButtonProject";
 import List from "./components/List/index";
+import useUsers from "@hooks/useUsers";
 
 const ProjectList: FC = () => {
   useDocumentTitle("项目列表", false);
-  const [users, setUsers] = useState<IUser[]>([]);
   const [param, setParam] = useProjectsSearchParams();
-  const http = useHttp();
   const { open } = useProjectModal();
-
-  useEffect(() => {
-    const init = async () => {
-      http(["users"]).then((res) => {
-        setUsers(res);
-      });
-    };
-
-    init();
-  }, [http]);
+  const { data: users } = useUsers() as any;
 
   return (
     <div className={styles.container}>

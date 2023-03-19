@@ -6,7 +6,7 @@ const useHttp = () => {
   const { user } = useAuth();
 
   return useCallback(
-    ([url, config]: Parameters<typeof http>) =>
+    (...[url, config]: Parameters<typeof http>) =>
       http(url, { ...config, token: user?.token }),
     [user?.token]
   );

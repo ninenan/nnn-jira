@@ -1,4 +1,4 @@
-import { Input, Select, Form } from "antd";
+import { Input, Form } from "antd";
 import { CSSProperties, PropsWithChildren } from "react";
 import { IUser, IProject } from "@/typings";
 import IdSelect from "@components/IdSelect";

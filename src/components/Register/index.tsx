@@ -1,11 +1,13 @@
 import useHome from "@hooks/useHome";
 import { Button, Form, Input } from "antd";
+import ErrorTemplate from "@components/Base/ErrorTemplate";
+
 const Regiser = () => {
   const { isLoading, error, handleRegister } = useHome();
 
   return (
     <div>
-      {error && error.message}
+      {error && <ErrorTemplate error={error} />}
       <Form onFinish={handleRegister}>
         <Form.Item
           name="username"
