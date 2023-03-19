@@ -1,18 +1,13 @@
-import React, { PropsWithChildren, FC } from "react";
 import { Drawer, Button } from "antd";
+import { useProjectModal } from "@/views/projectList/hooks/useProject";
 
-interface IProps {
-  isShowProjectModal: boolean;
-  onClose: () => void;
-}
-
-const ProjectModal: FC<IProps> = (props) => {
-  const { isShowProjectModal, onClose } = props;
+const ProjectModal = () => {
+  const { projectModalOpen, close } = useProjectModal();
 
   return (
-    <Drawer open={isShowProjectModal} width={"100%"} onClose={onClose}>
+    <Drawer open={projectModalOpen} width={"100%"} onClose={close}>
       <h1>project modal</h1>
-      <Button onClick={onClose}>close</Button>
+      <Button onClick={close}>close</Button>
     </Drawer>
   );
 };

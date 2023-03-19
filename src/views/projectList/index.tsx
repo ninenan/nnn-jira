@@ -5,7 +5,7 @@ import { Row, Button } from "antd";
 import { FC, useEffect, useState } from "react";
 import styles from "./index.module.scss";
 import useHttp from "@hooks/useHttp";
-import { useProjectsSearchParams } from "./hooks/useProject";
+import { useProjectModal, useProjectsSearchParams } from "./hooks/useProject";
 import ProjectModal from "@components/ProjectModal";
 import ButtonProject from "@components/Base/ButtonProject";
 import List from "./components/List/index";
@@ -15,7 +15,7 @@ const ProjectList: FC = () => {
   const [users, setUsers] = useState<IUser[]>([]);
   const [param, setParam] = useProjectsSearchParams();
   const http = useHttp();
-  const [isShowProjectModal, setIsShowProjectModal] = useState(false);
+  const { open } = useProjectModal();
 
   useEffect(() => {
     const init = async () => {
@@ -31,7 +31,7 @@ const ProjectList: FC = () => {
     <div className={styles.container}>
       <Row justify="space-between" align="middle">
         <h1>项目列表</h1>
-        <ButtonProject onClick={() => setIsShowProjectModal(true)} />
+        <ButtonProject onClick={open} />
       </Row>
       <SearchCom
         searchParam={param}
@@ -42,15 +42,12 @@ const ProjectList: FC = () => {
       <List
         users={users}
         projectButton={
-          <Button onClick={() => setIsShowProjectModal(true)} type="link">
+          <Button onClick={open} type="link">
             创建项目
           </Button>
         }
       />
-      <ProjectModal
-        isShowProjectModal={isShowProjectModal}
-        onClose={() => setIsShowProjectModal(false)}
-      />
+      <ProjectModal />
     </div>
   );
 };

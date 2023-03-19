@@ -35,3 +35,32 @@ export const useTest = () => {
 ```typescript
 setState((prev) => ({ ...prev, status: "pending" }));
 ```
+
+## hooks 返回数组的最大好处
+
+可以随意命名
+
+适用于返回参数只有 1-3 个
+
+useTest.ts
+
+```typescript
+const usetTest = () => {
+  const a = () => {};
+  const b = 1;
+  const c = 2;
+
+  return [a, b, c];
+};
+```
+
+app.ts
+
+```typescript
+import useTest from "useTest";
+
+const app = () => {
+  const [e, d, f] = useTest();
+  return <div>app</div>;
+};
+```
