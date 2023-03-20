@@ -1,6 +1,6 @@
 import useDocumentTitle from "@/hooks/useDocumentTitle";
 import SearchCom from "@components/SearchCom";
-import { Row, Button } from "antd";
+import { Row } from "antd";
 import { FC } from "react";
 import styles from "./index.module.scss";
 import { useProjectModal, useProjectsSearchParams } from "./hooks/useProject";
@@ -27,14 +27,7 @@ const ProjectList: FC = () => {
         users={users}
         styles={{ marginBottom: "2rem" }}
       />
-      <List
-        users={users}
-        projectButton={
-          <Button onClick={open} type="link">
-            创建项目
-          </Button>
-        }
-      />
+      <List users={users} />
       <ProjectModal />
     </div>
   );

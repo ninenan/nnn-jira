@@ -1,5 +1,5 @@
-import React, { useMemo, PropsWithChildren, ReactNode, FC } from "react";
-import { TableProps, Table, MenuProps, Button, Dropdown } from "antd";
+import { useMemo, PropsWithChildren, FC } from "react";
+import { TableProps, Table, Button, Popover } from "antd";
 import {
   useProjects,
   useProjectsSearchParams,
@@ -13,18 +13,14 @@ import { cleanObj } from "@helpers/utils";
 import qs from "qs";
 import dayjs from "dayjs";
 import ErrorTemplate from "@components/Base/ErrorTemplate";
+import "./index.scss";
 
 // 直接在 antd 中的 table 组件的属性上添加一个 users 属性
 interface IProps extends TableProps<IProject> {
   users: IUser[];
-  projectButton: ReactNode;
 }
 
-const List: FC<PropsWithChildren<IProps>> = ({
-  users,
-  projectButton,
-  ...restProps
-}) => {
+const List: FC<PropsWithChildren<IProps>> = ({ users, ...restProps }) => {
   const [param] = useProjectsSearchParams();
   const {
     data: list,
@@ -47,12 +43,17 @@ const List: FC<PropsWithChildren<IProps>> = ({
     });
   };
 
-  const menuItems: MenuProps["items"] = [
-    {
-      key: "add",
-      label: projectButton,
-    },
-  ];
+  const popoverContent = (project: IProject) => {
+    return (
+      <div>
+        <div>
+          <Button type="text" onClick={editProject(project.id)}>
+            编辑
+          </Button>
+        </div>
+      </div>
+    );
+  };
 
   return (
     <div>
@@ -115,21 +116,11 @@ const List: FC<PropsWithChildren<IProps>> = ({
             },
             {
               title: "操作",
-              render(value, project) {
+              render(_, project) {
                 return (
-                  <Dropdown
-                    menu={{
-                      items: menuItems,
-                    }}
-                    dropdownRender={(menu) => (
-                      <div>
-                        {React.cloneElement(menu as React.ReactElement)}
-                        <Button onClick={editProject(project.id)}>编辑</Button>
-                      </div>
-                    )}
-                  >
-                    <Button type={"link"}>...</Button>
-                  </Dropdown>
+                  <Popover placement="bottom" content={popoverContent(project)}>
+                    <Button type="link">...</Button>
+                  </Popover>
                 );
               },
             },

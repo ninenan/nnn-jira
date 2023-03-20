@@ -105,7 +105,7 @@ export const useProject = (id?: number) => {
   const http = useHttp();
 
   // enabled 当 id 不存在的时候不执行请求
-  return useQuery<IProject>(["project", { id }], () => http(`project/${id}`), {
+  return useQuery<IProject>(["project", { id }], () => http(`projects/${id}`), {
     enabled: !!id,
   });
 };

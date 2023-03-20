@@ -6,6 +6,9 @@ import {
   useProjectModal,
 } from "@/views/projectList/hooks/useProject";
 import ErrorTemplate from "@components/Base/ErrorTemplate";
+import IdSelect from "@components/IdSelect";
+import useUsers from "@hooks/useUsers";
+import styles from "./index.module.scss";
 
 const ProjectModal = () => {
   const { projectModalOpen, close, editingProject, isLoading } =
@@ -14,6 +17,7 @@ const ProjectModal = () => {
   const useMutateProjet = editingProject ? useEditProject : useAddProject;
   const { mutateAsync, isLoading: mutateLoading, error } = useMutateProjet();
   const [form] = Form.useForm();
+  const { data: users } = useUsers();
 
   const onFinish = (formValue: any) => {
     mutateAsync({ ...editingProject, ...formValue }).then(() => {
@@ -27,11 +31,11 @@ const ProjectModal = () => {
   }, [form, editingProject]);
 
   return (
-    <Drawer open={projectModalOpen} width={"100%"} onClose={close}>
+    <Drawer forceRender open={projectModalOpen} width={"100%"} onClose={close}>
       {isLoading ? (
         <Spin size="large" />
       ) : (
-        <>
+        <div className={styles.container}>
           <h1>{title}</h1>
           <ErrorTemplate error={error} />
           <Form
@@ -56,8 +60,8 @@ const ProjectModal = () => {
               <Input placeholder={"请输入部门名"} />
             </Form.Item>
 
-            <Form.Item label={"负责人"} name={"personId"}>
-              {/* <UserSelect defaultOptionName={"负责人"} /> */}
+            <Form.Item label={"负责人"} name="personId">
+              <IdSelect options={users} />
             </Form.Item>
 
             <Form.Item style={{ textAlign: "right" }}>
@@ -70,7 +74,7 @@ const ProjectModal = () => {
               </Button>
             </Form.Item>
           </Form>
-        </>
+        </div>
       )}
     </Drawer>
   );

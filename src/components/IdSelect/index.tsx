@@ -8,10 +8,10 @@ import { DefaultOptionType } from "antd/es/select";
 
 interface IIdSelectProps
   extends Omit<SelectProps, "onChange" | "defaultValue" | "options"> {
-  onChange: (value?: number) => void;
+  onChange?: (value?: number) => void;
   defaultValue?: number;
   options?: { name: string; id: number }[];
-  style: CSSProperties;
+  style?: CSSProperties;
   defaultOptionName?: string;
 }
 
@@ -22,7 +22,7 @@ const IdSelect: FC<IIdSelectProps> = (props) => {
     props;
   return (
     <Select
-      onChange={(val) => onChange(toNumber(val) || undefined)}
+      onChange={(val) => onChange?.(toNumber(val) || undefined)}
       fieldNames={{ label: "name", value: "id" }}
       options={options as DefaultOptionType[] | undefined}
       defaultValue={defaultValue}
