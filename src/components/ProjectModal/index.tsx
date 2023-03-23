@@ -30,8 +30,18 @@ const ProjectModal = () => {
     form.setFieldsValue(editingProject);
   }, [form, editingProject]);
 
+  const handleOnClose = () => {
+    form.resetFields();
+    close();
+  };
+
   return (
-    <Drawer forceRender open={projectModalOpen} width={"100%"} onClose={close}>
+    <Drawer
+      forceRender
+      open={projectModalOpen}
+      width={"100%"}
+      onClose={handleOnClose}
+    >
       {isLoading ? (
         <Spin size="large" />
       ) : (

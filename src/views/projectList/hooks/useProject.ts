@@ -61,12 +61,27 @@ export const useEditProject = () => {
 
   const http = useHttp();
   const queryClient = useQueryClient();
+  const [searchParams] = useProjectsSearchParams();
+  const queryKey = ["projects", searchParams];
 
   return useMutation(
     (data: Partial<IProject>) =>
       http(`projects/${data.id}`, { method: "PATCH", data }),
     {
       onSuccess: () => queryClient.invalidateQueries("projects"),
+      onMutate: (target) => {
+        const previousItems = queryClient.getQueryData(queryKey); // 获取缓存中的数据
+        queryClient.setQueryData(queryKey, (old?: any) => {
+          // old 缓存中的数据
+          return old?.map((project: IProject) =>
+            project.id === target.id ? { ...project, ...target } : project
+          );
+        });
+        return { previousItems };
+      },
+      onError: (error, newItem, context) => {
+        queryClient.setQueryData(queryKey, context?.previousItems);
+      },
     }
   );
 };
