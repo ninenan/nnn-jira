@@ -3,7 +3,6 @@ import { DevTools, loadServer } from "jira-dev-tool";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { RouterProvider } from "react-router-dom";
-// import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 import router from "@/routes";
 import ErrorBoundary from "@components/Base/ErrorBoundary";

@@ -1,6 +1,6 @@
 import { useMemo, PropsWithChildren, FC } from "react";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
-import { TableProps, Table, Button, Popover, Popconfirm, Modal } from "antd";
+import { TableProps, Table, Button, Popover, Modal } from "antd";
 import {
   useProjects,
   useProjectsSearchParams,
