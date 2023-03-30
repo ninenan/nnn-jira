@@ -5,6 +5,7 @@ import {
   useProjectsSearchParams,
   useEditProject,
   useProjectModal,
+  useProjectsQueryKey,
 } from "../../hooks/useProject";
 import { Link, useNavigate } from "react-router-dom";
 import Pin from "@components/Base/Pin";
@@ -27,7 +28,7 @@ const List: FC<PropsWithChildren<IProps>> = ({ users, ...restProps }) => {
     isLoading,
     error,
   } = useProjects(useMemo(() => cleanObj(param), [param]));
-  const { mutate } = useEditProject();
+  const { mutate } = useEditProject(useProjectsQueryKey());
   const pinProject = (id: number) => (pin: boolean) => mutate({ id, pin });
   const navigate = useNavigate();
   const { startEdit } = useProjectModal();

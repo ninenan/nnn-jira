@@ -4,6 +4,7 @@ import {
   useAddProject,
   useEditProject,
   useProjectModal,
+  useProjectsQueryKey,
 } from "@/views/projectList/hooks/useProject";
 import ErrorTemplate from "@components/Base/ErrorTemplate";
 import IdSelect from "@components/IdSelect";
@@ -15,7 +16,11 @@ const ProjectModal = () => {
     useProjectModal();
   const title = editingProject ? "编辑项目" : "创建项目";
   const useMutateProjet = editingProject ? useEditProject : useAddProject;
-  const { mutateAsync, isLoading: mutateLoading, error } = useMutateProjet();
+  const {
+    mutateAsync,
+    isLoading: mutateLoading,
+    error,
+  } = useMutateProjet(useProjectsQueryKey());
   const [form] = Form.useForm();
   const { data: users } = useUsers();
 

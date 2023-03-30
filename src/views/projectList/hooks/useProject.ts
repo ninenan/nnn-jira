@@ -3,7 +3,8 @@ import { useMemo } from "react";
 import { IProject } from "@/typings";
 import useHttp from "@hooks/useHttp";
 import useUrlQueryParam from "@hooks/useUrlQueryParam";
-import { useQuery, useMutation, useQueryClient } from "react-query";
+import { useQuery, useMutation, useQueryClient, QueryKey } from "react-query";
+import { useEditConfig } from "@hooks/use-optimistic-options";
 
 // 旧版
 // useAsync
@@ -42,7 +43,7 @@ export const useProjects = (data?: Partial<IProject>) => {
   );
 };
 
-export const useEditProject = () => {
+export const useEditProject = (queryKey: QueryKey) => {
   // const { run, ...restResult } = useAsync();
   // const http = useHttp();
   // const mutate = (params: Partial<IProject>) => {
@@ -60,29 +61,11 @@ export const useEditProject = () => {
   // };
 
   const http = useHttp();
-  const queryClient = useQueryClient();
-  const [searchParams] = useProjectsSearchParams();
-  const queryKey = ["projects", searchParams];
 
   return useMutation(
     (data: Partial<IProject>) =>
       http(`projects/${data.id}`, { method: "PATCH", data }),
-    {
-      onSuccess: () => queryClient.invalidateQueries("projects"),
-      onMutate: (target) => {
-        const previousItems = queryClient.getQueryData(queryKey); // 获取缓存中的数据
-        queryClient.setQueryData(queryKey, (old?: any) => {
-          // old 缓存中的数据
-          return old?.map((project: IProject) =>
-            project.id === target.id ? { ...project, ...target } : project
-          );
-        });
-        return { previousItems };
-      },
-      onError: (error, newItem, context) => {
-        queryClient.setQueryData(queryKey, context?.previousItems);
-      },
-    }
+    useEditConfig(queryKey)
   );
 };
 
@@ -135,6 +118,11 @@ export const useProjectsSearchParams = () => {
     ),
     setParam,
   ] as const;
+};
+
+export const useProjectsQueryKey = () => {
+  const [params] = useProjectsSearchParams();
+  return ["projects", params];
 };
 
 export const useProjectModal = () => {

@@ -2,7 +2,7 @@ import { cleanObj, subset } from "@/helpers/utils";
 import { useMemo, useState } from "react";
 import { URLSearchParamsInit, useSearchParams } from "react-router-dom";
 
-const useSetUrlSearchParams = () => {
+export const useSetUrlSearchParams = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   return (params: Record<string, unknown>) => {
