@@ -4,7 +4,11 @@ import { IProject } from "@/typings";
 import useHttp from "@hooks/useHttp";
 import useUrlQueryParam from "@hooks/useUrlQueryParam";
 import { useQuery, useMutation, useQueryClient, QueryKey } from "react-query";
-import { useEditConfig } from "@hooks/use-optimistic-options";
+import {
+  useAddConfig,
+  useDeleteConfig,
+  useEditConfig,
+} from "@hooks/useOptimisticOptions";
 
 // 旧版
 // useAsync
@@ -69,7 +73,7 @@ export const useEditProject = (queryKey: QueryKey) => {
   );
 };
 
-export const useAddProject = () => {
+export const useAddProject = (queryKey: QueryKey) => {
   // const { run, ...restResult } = useAsync();
   // const http = useHttp();
   // const mutate = (params: Partial<IProject>) => {
@@ -87,7 +91,6 @@ export const useAddProject = () => {
   // };
 
   const http = useHttp();
-  const queryClient = useQueryClient();
 
   return useMutation(
     (data: Partial<IProject>) =>
@@ -95,7 +98,19 @@ export const useAddProject = () => {
         data,
         method: "POST",
       }),
-    { onSuccess: () => queryClient.invalidateQueries("projects") }
+    useAddConfig(queryKey)
+  );
+};
+
+export const useDeleteProject = (queryKey: QueryKey) => {
+  const http = useHttp();
+
+  return useMutation(
+    ({ id }: { id: number }) =>
+      http(`projects/${id}`, {
+        method: "DELETE",
+      }),
+    useDeleteConfig(queryKey)
   );
 };
 

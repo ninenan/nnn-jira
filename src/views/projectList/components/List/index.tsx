@@ -1,11 +1,13 @@
 import { useMemo, PropsWithChildren, FC } from "react";
-import { TableProps, Table, Button, Popover } from "antd";
+import { ExclamationCircleOutlined } from "@ant-design/icons";
+import { TableProps, Table, Button, Popover, Popconfirm, Modal } from "antd";
 import {
   useProjects,
   useProjectsSearchParams,
   useEditProject,
   useProjectModal,
   useProjectsQueryKey,
+  useDeleteProject,
 } from "../../hooks/useProject";
 import { Link, useNavigate } from "react-router-dom";
 import Pin from "@components/Base/Pin";
@@ -23,16 +25,30 @@ interface IProps extends TableProps<IProject> {
 
 const List: FC<PropsWithChildren<IProps>> = ({ users, ...restProps }) => {
   const [param] = useProjectsSearchParams();
+  const [modal, contextHolder] = Modal.useModal();
   const {
     data: list,
     isLoading,
     error,
   } = useProjects(useMemo(() => cleanObj(param), [param]));
   const { mutate } = useEditProject(useProjectsQueryKey());
+  const { mutate: deleteProject } = useDeleteProject(useProjectsQueryKey());
   const pinProject = (id: number) => (pin: boolean) => mutate({ id, pin });
   const navigate = useNavigate();
   const { startEdit } = useProjectModal();
   const editProject = (id: number) => () => startEdit(id);
+  const confirmDeleteProject = (id: number) => {
+    modal.confirm({
+      title: "提示",
+      icon: <ExclamationCircleOutlined />,
+      content: "确认删除当前项？",
+      okText: "确认",
+      cancelText: "取消",
+      onOk: () => {
+        deleteProject({ id });
+      },
+    });
+  };
 
   const handleToTest = () => {
     navigate({
@@ -47,17 +63,23 @@ const List: FC<PropsWithChildren<IProps>> = ({ users, ...restProps }) => {
   const popoverContent = (project: IProject) => {
     return (
       <div>
-        <div>
-          <Button type="text" onClick={editProject(project.id)}>
-            编辑
-          </Button>
-        </div>
+        <Button block type="text" onClick={editProject(project.id)}>
+          编辑
+        </Button>
+        <Button
+          block
+          type="text"
+          onClick={() => confirmDeleteProject(project.id)}
+        >
+          删除
+        </Button>
       </div>
     );
   };
 
   return (
     <div>
+      {contextHolder}
       {error ? (
         <ErrorTemplate error={error} />
       ) : (
