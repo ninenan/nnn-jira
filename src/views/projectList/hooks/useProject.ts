@@ -2,7 +2,9 @@ import { useMemo } from "react";
 // import useAsync from "@hooks/useAsync";
 import { IProject } from "@/typings";
 import useHttp from "@hooks/useHttp";
-import useUrlQueryParam from "@hooks/useUrlQueryParam";
+import useUrlQueryParam, {
+  useSetUrlSearchParams,
+} from "@hooks/useUrlQueryParam";
 import { useQuery, useMutation, useQueryClient, QueryKey } from "react-query";
 import {
   useAddConfig,
@@ -141,6 +143,7 @@ export const useProjectsQueryKey = () => {
 };
 
 export const useProjectModal = () => {
+  const setSearchParams = useSetUrlSearchParams();
   const [{ projectCreate }, setProjectCreate] = useUrlQueryParam([
     "projectCreate",
   ]);
@@ -150,10 +153,8 @@ export const useProjectModal = () => {
   const { data: editingProject, isLoading } = useProject(+editingProjectId);
 
   const open = () => setProjectCreate({ projectCreate: true });
-  const close = () => {
-    setProjectCreate({ projectCreate: undefined });
-    editingProjectId && setEditingProjectId({ editingProjectId: undefined });
-  };
+  const close = () =>
+    setSearchParams({ projectCreate: "", editingProjectId: "" });
   const startEdit = (editingProjectId: number) => {
     setEditingProjectId({ editingProjectId });
   };
