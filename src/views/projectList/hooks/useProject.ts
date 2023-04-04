@@ -154,11 +154,9 @@ export const useProjectModal = () => {
 
   const open = () => setProjectCreate({ projectCreate: true });
   const close = () =>
-    setSearchParams({ projectCreate: "", editingProjectId: "" });
-  const startEdit = (editingProjectId: number) => {
+    setSearchParams({ projectCreate: "", editingProjectId: "" }); // 关闭时清空地址栏数据
+  const startEdit = (editingProjectId: number) =>
     setEditingProjectId({ editingProjectId });
-  };
-
   return {
     open,
     close,
