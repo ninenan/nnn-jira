@@ -5,6 +5,7 @@ import * as auth from "@helpers/auth";
 import React, { createContext, PropsWithChildren, useEffect } from "react";
 import FullScreenErrorCallback from "@components/Base/FullScreenErrorFallback";
 import FullScreenLoading from "@components/Base/FullScreenLoading";
+import { useQueryClient } from "react-query";
 
 export const AuthContext = createContext<
   | {
@@ -39,10 +40,15 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
     run,
     setData: setUser,
   } = useAsync<IUser | null>();
+  const queryClient = useQueryClient();
 
   const login = (user: ISimpleUser) => auth.login(user).then(setUser);
   const register = (user: ISimpleUser) => auth.register(user).then(setUser);
-  const logout = () => auth.logout().then(() => setUser(null));
+  const logout = () =>
+    auth.logout().then(() => {
+      setUser(null);
+      queryClient.clear(); // 将通过 use-query 获取的数据全部删除
+    });
 
   useEffect(() => {
     const init = async () => {
