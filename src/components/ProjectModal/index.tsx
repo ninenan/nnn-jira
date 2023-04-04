@@ -5,7 +5,7 @@ import {
   useEditProject,
   useProjectModal,
   useProjectsQueryKey,
-} from "@/views/projectList/hooks/useProject";
+} from "@hooks/useProject";
 import ErrorTemplate from "@components/Base/ErrorTemplate";
 import IdSelect from "@components/IdSelect";
 import useUsers from "@hooks/useUsers";

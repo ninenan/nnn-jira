@@ -3,7 +3,7 @@ import SearchCom from "@components/SearchCom";
 import { Row } from "antd";
 import { FC } from "react";
 import styles from "./index.module.scss";
-import { useProjectModal, useProjectsSearchParams } from "./hooks/useProject";
+import { useProjectModal, useProjectsSearchParams } from "@hooks/useProject";
 import ProjectModal from "@components/ProjectModal";
 import ButtonProject from "@components/Base/ButtonProject";
 import List from "./components/List/index";

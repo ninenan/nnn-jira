@@ -1,5 +1,5 @@
 import { Popover, Typography, List } from "antd";
-import { useProjects } from "@views/projectList/hooks/useProject";
+import { useProjects } from "@hooks/useProject";
 import styles from "./index.module.scss";
 import { FC, PropsWithChildren, ReactNode } from "react";
 

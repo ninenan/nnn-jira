@@ -8,7 +8,7 @@ import {
   useProjectModal,
   useProjectsQueryKey,
   useDeleteProject,
-} from "../../hooks/useProject";
+} from "@hooks/useProject";
 import { Link, useNavigate } from "react-router-dom";
 import Pin from "@components/Base/Pin";
 import type { IProject, IUser } from "@/typings";
