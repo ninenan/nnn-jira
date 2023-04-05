@@ -1,9 +1,9 @@
 import { Link, Outlet } from "react-router-dom";
-import { useSearchParams } from "react-router-dom";
+// import { useSearchParams } from "react-router-dom";
 
 const Project = () => {
-  const [searchParams] = useSearchParams();
-  console.log(searchParams);
+  // const [searchParams] = useSearchParams();
+  // console.log(searchParams);
 
   return (
     <div>

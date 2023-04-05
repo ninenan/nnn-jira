@@ -41,3 +41,8 @@ export interface IKanban {
   name: string;
   projectId: number;
 }
+
+export interface ITaskType {
+  id: number;
+  name: string;
+}
