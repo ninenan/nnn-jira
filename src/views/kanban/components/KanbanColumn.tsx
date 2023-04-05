@@ -2,10 +2,13 @@ import { useTasks } from "@/hooks/useTask";
 import { useTaskTypes } from "@/hooks/useTaskType";
 import { IKanban } from "@/typings";
 import { FC } from "react";
+import { Card } from "antd";
 import { useTasksSearchParams } from "../utils";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fas } from "@fortawesome/free-solid-svg-icons";
+import styles from "./index.module.scss";
+
 library.add(fas);
 
 export interface IProps {
@@ -28,13 +31,15 @@ export const KanbanColumn: FC<IProps> = ({ kanban }) => {
   const currentTasks = allTasks?.filter((task) => task.kanbanId === kanban.id);
 
   return (
-    <div>
+    <div className={styles.kanbanColumnContainer}>
       <h3>{kanban.name}</h3>
-      {currentTasks?.map((task) => (
-        <div key={task.id}>
-          {task.name} <TaskTypeIcon id={task.typeId} />
-        </div>
-      ))}
+      <div className="styles.tasksConatainer">
+        {currentTasks?.map((task) => (
+          <Card style={{ marginBottom: "0.5rem" }} key={task.id}>
+            {task.name} <TaskTypeIcon id={task.typeId} />
+          </Card>
+        ))}
+      </div>
     </div>
   );
 };
