@@ -13,6 +13,7 @@ module.exports = {
       "@context": resolve("src/context"),
       "@assets": resolve("src/assets"),
       "@views": resolve("src/views"),
+      "@typings": resolve("src/typings"),
     },
   },
 };

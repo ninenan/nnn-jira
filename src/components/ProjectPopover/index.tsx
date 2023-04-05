@@ -1,15 +1,19 @@
+import { FC, PropsWithChildren, ReactNode, useMemo } from "react";
 import { Popover, Typography, List } from "antd";
-import { useProjects } from "@hooks/useProject";
+import { useProjects, useProjectsSearchParams } from "@hooks/useProject";
+import { cleanObj } from "@helpers/utils";
 import styles from "./index.module.scss";
-import { FC, PropsWithChildren, ReactNode } from "react";
 
 interface IProps {
   projectButton: ReactNode;
 }
 
 const ProjectPopver: FC<PropsWithChildren<IProps>> = ({ projectButton }) => {
+  const [param] = useProjectsSearchParams();
   const { Paragraph } = Typography;
-  const { data: projects } = useProjects();
+  const { data: projects } = useProjects(
+    useMemo(() => cleanObj(param), [param])
+  );
   const pinnedProjects = projects?.filter((item) => item.pin);
 
   const content = (

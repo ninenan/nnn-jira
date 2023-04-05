@@ -24,7 +24,8 @@
       "@constants/*": ["src/constants/*"],
       "@context/*": ["src/context/*"],
       "@assets/*": ["src/assets/*"],
-      "@views/*": ["src/views/*"]
+      "@views/*": ["src/views/*"],
+      "@typings/*": ["src/typings/*"]
     }
   },
   "include": ["src"]

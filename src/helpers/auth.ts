@@ -1,5 +1,5 @@
 import { STORAGE } from "@/constants";
-import { IUser, ISimpleUser } from "@/typings";
+import { IUser, ISimpleUser } from "@typings/index";
 import { http } from "./http";
 
 // 获取 token

@@ -1,6 +1,6 @@
 import { Input, Form } from "antd";
 import { CSSProperties, PropsWithChildren } from "react";
-import { IUser, IProject } from "@/typings";
+import { IUser, IProject } from "@typings/index";
 import IdSelect from "@components/IdSelect";
 
 export type ISearchParams = Partial<Pick<IProject, "name" | "personId">>;

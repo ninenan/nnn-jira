@@ -11,7 +11,7 @@ import {
 } from "@hooks/useProject";
 import { Link, useNavigate } from "react-router-dom";
 import Pin from "@components/Base/Pin";
-import type { IProject, IUser } from "@/typings";
+import type { IProject, IUser } from "@typings/index";
 import { cleanObj } from "@helpers/utils";
 import qs from "qs";
 import dayjs from "dayjs";

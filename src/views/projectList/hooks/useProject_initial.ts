@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 // import useAsync from "@hooks/useAsync";
-import { IProject } from "@/typings";
+import { IProject } from "@typings/index";
 import useHttp from "@hooks/useHttp";
 import useUrlQueryParam, {
   useSetUrlSearchParams,

@@ -1,5 +1,5 @@
 import useHttp from "@hooks/useHttp";
-import type { IUser } from "@/typings";
+import type { IUser } from "@typings/index";
 import { useQuery } from "react-query";
 
 const useUsers = (data?: Partial<IUser>) => {

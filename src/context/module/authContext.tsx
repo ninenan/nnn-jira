@@ -1,6 +1,6 @@
 import { http } from "@/helpers/http";
 import useAsync from "@/hooks/useAsync";
-import { ISimpleUser, IUser } from "@/typings";
+import { ISimpleUser, IUser } from "@typings/index";
 import * as auth from "@helpers/auth";
 import React, { createContext, PropsWithChildren, useEffect } from "react";
 import FullScreenErrorCallback from "@components/Base/FullScreenErrorFallback";
