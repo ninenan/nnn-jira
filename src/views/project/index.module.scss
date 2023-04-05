@@ -1,0 +1,12 @@
+.projectDetailAside {
+  background-color: rgb(244, 245, 247);
+  display: flex;
+}
+
+.projectDetailMain {
+}
+
+.projectDetailContainer {
+  display: grid;
+  grid-template-columns: 16rem 1fr;
+}

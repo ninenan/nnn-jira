@@ -1,18 +1,27 @@
-import { Link, Outlet } from "react-router-dom";
-// import { useSearchParams } from "react-router-dom";
+import { Link, Outlet, useLocation } from "react-router-dom";
+import { Menu } from "antd";
+import styles from "./index.module.scss";
 
 const Project = () => {
-  // const [searchParams] = useSearchParams();
-  // console.log(searchParams);
+  const units = useLocation().pathname.split("/");
+  const selectedKeys = units[units.length - 1];
+  console.log(selectedKeys);
 
   return (
-    <div>
-      <h1>Project</h1>
-      <div>
-        <Link to="">看板</Link>
-        <Link to="epic">任务组</Link>
+    <div className={styles.projectDetailContainer}>
+      <div className={styles.projectDetailAside}>
+        <Menu mode="inline" selectedKeys={units}>
+          <Menu.Item key="kanban">
+            <Link to="">看板</Link>
+          </Menu.Item>
+          <Menu.Item key="epic">
+            <Link to="epic">任务组</Link>
+          </Menu.Item>
+        </Menu>
       </div>
-      <Outlet />
+      <div className={styles.projectDetailMain}>
+        <Outlet />
+      </div>
     </div>
   );
 };
