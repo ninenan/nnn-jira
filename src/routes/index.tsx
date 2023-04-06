@@ -34,7 +34,6 @@ const router = createBrowserRouter([
   },
   {
     path: "/test",
-    // element: <Navigate to={{ pathname: "/projects/1" }} />,
     element: (
       <Suspense fallback={<h2>loading...</h2>}>
         <Test />

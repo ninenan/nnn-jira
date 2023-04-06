@@ -11,7 +11,7 @@ const KanBan = () => {
   const { data: kanbans } = useKanbans(useKanbanSearchParams());
 
   return (
-    <div>
+    <div className={styles.kanbanContainer}>
       <h1>{currentProject?.name}看板</h1>
       <SearchTem />
       <div className={styles.kanbanColulmnsContainer}>

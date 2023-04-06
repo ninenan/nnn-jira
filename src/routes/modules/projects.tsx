@@ -1,5 +1,6 @@
 import { RouteObject, Navigate } from "react-router-dom";
 import { lazy, Suspense } from "react";
+import BaseMain from "@/components/Base/BaseMain";
 
 const ProjectList = lazy(
   () => import(/* webpackChunkName: "projectList" */ "@views/projectList")
@@ -36,13 +37,15 @@ const router: RouteObject[] = [
       // 这里增加一个重定向的操作
       {
         index: true,
-        element: <Navigate to="kanban" />,
+        element: <Navigate to="kanban" replace />,
       },
       {
         path: "kanban",
         element: (
           <Suspense fallback={<h2>loading...</h2>}>
-            <KanBan />
+            <BaseMain>
+              <KanBan />
+            </BaseMain>
           </Suspense>
         ),
       },
@@ -50,7 +53,9 @@ const router: RouteObject[] = [
         path: "epic",
         element: (
           <Suspense fallback={<h2>loading...</h2>}>
-            <Epic />
+            <BaseMain>
+              <Epic />
+            </BaseMain>
           </Suspense>
         ),
       },

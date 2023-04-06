@@ -5,12 +5,11 @@ import styles from "./index.module.scss";
 const Project = () => {
   const units = useLocation().pathname.split("/");
   const selectedKeys = units[units.length - 1];
-  console.log(selectedKeys);
 
   return (
     <div className={styles.projectDetailContainer}>
       <div className={styles.projectDetailAside}>
-        <Menu mode="inline" selectedKeys={units}>
+        <Menu mode="inline" selectedKeys={[selectedKeys]}>
           <Menu.Item key="kanban">
             <Link to="">看板</Link>
           </Menu.Item>

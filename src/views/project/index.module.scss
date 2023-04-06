@@ -4,9 +4,11 @@
 }
 
 .projectDetailMain {
+  display: flex;
 }
 
 .projectDetailContainer {
   display: grid;
   grid-template-columns: 16rem 1fr;
+  width: 100%;
 }
