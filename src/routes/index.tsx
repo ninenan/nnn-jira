@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import { lazy, Suspense } from "react";
-import project from "./modules/project";
+import projects from "./modules/projects";
 
 const UnAuthenticated = lazy(
   // 增加 webpackChunkName: "unAuthenticated"，可以在对应的 netWork 中看到对应的 js 文件，相当于是重命名 js 文件操作
@@ -8,9 +8,6 @@ const UnAuthenticated = lazy(
     import("@views/unAuthenticated")
 );
 const ErrorPage = lazy(() => import("@views/errorPage"));
-const ProjectList = lazy(
-  () => import(/* webpackChunkName: "projectList" */ "@views/projectList")
-);
 const Authenticated = lazy(
   /* webpackChunkName: "authenticated" */ () => import("@views/authenticated")
 );
@@ -33,17 +30,7 @@ const router = createBrowserRouter([
       </Suspense>
     ),
     errorElement: <ErrorPage />,
-    children: [
-      {
-        index: true,
-        element: (
-          <Suspense fallback={<h2>loading...</h2>}>
-            <ProjectList />
-          </Suspense>
-        ),
-      },
-      { ...project },
-    ],
+    children: [...projects],
   },
   {
     path: "/test",
