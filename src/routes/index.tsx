@@ -1,16 +1,15 @@
-import { createBrowserRouter, Navigate } from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
 import { lazy, Suspense } from "react";
+import project from "./modules/project";
 
 const UnAuthenticated = lazy(
+  // 增加 webpackChunkName: "unAuthenticated"，可以在对应的 netWork 中看到对应的 js 文件，相当于是重命名 js 文件操作
   /* webpackChunkName: "unAuthenticated" */ () =>
     import("@views/unAuthenticated")
 );
 const ErrorPage = lazy(() => import("@views/errorPage"));
 const ProjectList = lazy(
   () => import(/* webpackChunkName: "projectList" */ "@views/projectList")
-);
-const Project = lazy(
-  /* webpackChunkName: "project" */ () => import("@views/project")
 );
 const Authenticated = lazy(
   /* webpackChunkName: "authenticated" */ () => import("@views/authenticated")
@@ -24,10 +23,6 @@ const GridDemo = lazy(
 const Test = lazy(
   /* webpackChunkName: "gridDemo" */ () => import("@views/test")
 );
-const KanBan = lazy(
-  /* webpackChunkName: "kanban" */ () => import("@views/kanban")
-);
-const Epic = lazy(/* webpackChunkName: "epic" */ () => import("@views/epic"));
 
 const router = createBrowserRouter([
   {
@@ -47,32 +42,7 @@ const router = createBrowserRouter([
           </Suspense>
         ),
       },
-      {
-        path: "/projects/:id",
-        element: (
-          <Suspense fallback={<h2>loading...</h2>}>
-            <Project />
-          </Suspense>
-        ),
-        children: [
-          {
-            index: true,
-            element: (
-              <Suspense fallback={<h2>loading...</h2>}>
-                <KanBan />
-              </Suspense>
-            ),
-          },
-          {
-            path: "epic",
-            element: (
-              <Suspense fallback={<h2>loading...</h2>}>
-                <Epic />
-              </Suspense>
-            ),
-          },
-        ],
-      },
+      { ...project },
     ],
   },
   {
