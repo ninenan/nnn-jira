@@ -3,13 +3,10 @@ import { useTaskTypes } from "@/hooks/useTaskType";
 import { IKanban } from "@/typings";
 import { FC } from "react";
 import { Card } from "antd";
-import { useTasksSearchParams } from "../utils";
+import { useTasksModal, useTasksSearchParams } from "../../utils";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { library } from "@fortawesome/fontawesome-svg-core";
-import { fas } from "@fortawesome/free-solid-svg-icons";
 import styles from "./index.module.scss";
-
-library.add(fas);
+import CreateTask from "../CreateTask";
 
 export interface IProps {
   kanban: IKanban;
@@ -27,6 +24,7 @@ const TaskTypeIcon = ({ id }: { id: number }) => {
 };
 
 export const KanbanColumn: FC<IProps> = ({ kanban }) => {
+  const { startEdit } = useTasksModal();
   const { data: allTasks } = useTasks(useTasksSearchParams());
   const currentTasks = allTasks?.filter((task) => task.kanbanId === kanban.id);
 
@@ -35,10 +33,15 @@ export const KanbanColumn: FC<IProps> = ({ kanban }) => {
       <h3>{kanban.name}</h3>
       <div className="styles.tasksConatainer">
         {currentTasks?.map((task) => (
-          <Card style={{ marginBottom: "0.5rem" }} key={task.id}>
+          <Card
+            onClick={() => startEdit(task.id)}
+            style={{ marginBottom: "0.5rem" }}
+            key={task.id}
+          >
             {task.name} <TaskTypeIcon id={task.typeId} />
           </Card>
         ))}
+        <CreateTask kanbanId={kanban.id} />
       </div>
     </div>
   );

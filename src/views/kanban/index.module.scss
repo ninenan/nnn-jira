@@ -1,7 +1,7 @@
 .kanbanColulmnsContainer {
   display: flex;
   flex: 1;
-  // overflow-x: scroll;
+  overflow-x: auto;
 }
 .kanbanContainer {
   display: flex;

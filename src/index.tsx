@@ -9,6 +9,9 @@ import ErrorBoundary from "@components/Base/ErrorBoundary";
 import FullScreenErrorCallback from "@components/Base/FullScreenErrorFallback";
 import "antd/dist/reset.css";
 import "./App.css";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { fas } from "@fortawesome/free-solid-svg-icons";
+library.add(fas);
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
