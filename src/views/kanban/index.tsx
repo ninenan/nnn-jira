@@ -20,7 +20,7 @@ const KanBan = () => {
       {isLoading ? (
         <Spin size="large" />
       ) : (
-        <div className={styles.kanbanColulmnsContainer}>
+        <div className={styles.kanbanColumnsContainer}>
           {kanbans?.map((kanban) => (
             <KanbanColumn kanban={kanban} key={kanban.id} />
           ))}

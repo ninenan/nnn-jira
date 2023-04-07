@@ -8,7 +8,7 @@ import { useTaskTypes } from "@/hooks/useTaskType";
 const SearchTem = () => {
   const { data: users } = useUsers();
   const { data: taskTypes } = useTaskTypes();
-  const searchParmas = useTasksSearchParams();
+  const searchParams = useTasksSearchParams();
   const setSearchParams = useSetUrlSearchParams();
   const reset = () => {
     setSearchParams({
@@ -26,7 +26,7 @@ const SearchTem = () => {
         <Input
           style={{ width: "20rem" }}
           placeholder="任务名"
-          value={searchParmas.name}
+          value={searchParams.name}
           onChange={(e) => setSearchParams({ name: e.target.value })}
         />
       </Form.Item>
@@ -34,7 +34,7 @@ const SearchTem = () => {
         <IdSelect
           defaultOptionName="负责人"
           placeholder="负责人"
-          value={searchParmas.processorId}
+          value={searchParams.processorId}
           options={users}
           onChange={(val: any) => setSearchParams({ processorId: val })}
         />
@@ -43,7 +43,7 @@ const SearchTem = () => {
         <IdSelect
           defaultOptionName="类型"
           placeholder="类型"
-          value={searchParmas.typeId}
+          value={searchParams.typeId}
           options={taskTypes}
           onChange={(val: any) => setSearchParams({ typeId: val })}
         />
