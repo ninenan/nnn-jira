@@ -37,11 +37,11 @@ const List: FC<PropsWithChildren<IProps>> = ({ users, ...restProps }) => {
   const navigate = useNavigate();
   const { startEdit } = useProjectModal();
   const editProject = (id: number) => () => startEdit(id);
-  const confirmDeleteProject = (id: number) => {
+  const confirmDeleteProject = ({ id, name }: IProject) => {
     modal.confirm({
       title: "提示",
       icon: <ExclamationCircleOutlined />,
-      content: "确认删除当前项？",
+      content: `确认删除【${name}】`,
       okText: "确认",
       cancelText: "取消",
       onOk: () => {
@@ -66,11 +66,7 @@ const List: FC<PropsWithChildren<IProps>> = ({ users, ...restProps }) => {
         <Button block type="text" onClick={editProject(project.id)}>
           编辑
         </Button>
-        <Button
-          block
-          type="text"
-          onClick={() => confirmDeleteProject(project.id)}
-        >
+        <Button block type="text" onClick={() => confirmDeleteProject(project)}>
           删除
         </Button>
       </div>

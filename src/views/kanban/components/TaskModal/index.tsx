@@ -39,7 +39,7 @@ const TaskModal = () => {
       okText: "确定",
       cancelText: "取消",
       title: "提示",
-      content: `确定删除${editingTask?.name}吗`,
+      content: `确定删除【${editingTask?.name}】`,
       onOk: () => {
         deleteTask({ id: +editingTaskId });
       },

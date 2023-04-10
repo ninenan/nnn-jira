@@ -53,7 +53,7 @@ const More = ({ kanban }: { kanban: IKanban }) => {
       okText: "确定",
       cancelText: "取消",
       title: "提示",
-      content: `确定删除${kanban.name}吗`,
+      content: `确定删除【${kanban.name}】`,
       onOk: () => {
         deleteKanban({ id: kanban.id });
       },
