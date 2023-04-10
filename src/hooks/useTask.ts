@@ -2,7 +2,11 @@ import { IProject, ITask } from "@typings/index";
 import { useQuery, useMutation } from "react-query";
 import type { QueryKey } from "react-query";
 import useHttp from "./useHttp";
-import { useAddConfig, useEditConfig } from "@hooks/useOptimisticOptions";
+import {
+  useAddConfig,
+  useEditConfig,
+  useDeleteConfig,
+} from "@hooks/useOptimisticOptions";
 
 export const useTasks = (params?: Partial<ITask>) => {
   const http = useHttp();
@@ -40,5 +44,14 @@ export const useEditTask = (queryKey: QueryKey) => {
     (data: Partial<ITask>) =>
       http(`tasks/${data.id}`, { method: "PATCH", data }),
     useEditConfig(queryKey)
+  );
+};
+
+export const useDeleteTask = (queryKey: QueryKey) => {
+  const http = useHttp();
+
+  return useMutation(
+    ({ id }: { id: number }) => http(`tasks/${id}`, { method: "DELETE" }),
+    useDeleteConfig(queryKey)
   );
 };
