@@ -1,6 +1,7 @@
 import { ReactNode, FC } from "react";
 import styles from "./index.module.scss";
 import ProjectPopover from "@components/ProjectPopover";
+import UsersPopover from "@components/UsersPopover";
 import { ReactComponent as SoftwareLogo } from "@assets/img/software-logo.svg";
 import { resetRoute } from "@helpers/utils";
 import UserTemplate from "../UserTemplate";
@@ -16,7 +17,7 @@ const Header: FC<IProps> = ({ projectButton }) => {
         <div className={styles.headerItemContainer}>
           <SoftwareLogo width={"18rem"} onClick={resetRoute} />
           <ProjectPopover projectButton={projectButton} />
-          <span>用户</span>
+          <UsersPopover />
         </div>
         <UserTemplate />
       </header>
