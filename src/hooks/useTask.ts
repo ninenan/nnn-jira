@@ -6,7 +6,9 @@ import {
   useAddConfig,
   useEditConfig,
   useDeleteConfig,
+  useReorderConfig,
 } from "@hooks/useOptimisticOptions";
+import type { ISortProps as ISortKanbanProps } from "./useKanbans";
 
 export const useTasks = (params?: Partial<ITask>) => {
   const http = useHttp();
@@ -53,5 +55,18 @@ export const useDeleteTask = (queryKey: QueryKey) => {
   return useMutation(
     ({ id }: { id: number }) => http(`tasks/${id}`, { method: "DELETE" }),
     useDeleteConfig(queryKey)
+  );
+};
+
+export interface ISortProps extends ISortKanbanProps {
+  fromKanbanId?: number;
+  toKanbanId?: number;
+}
+
+export const useReorderTask = (queryKey: QueryKey) => {
+  const http = useHttp();
+  return useMutation(
+    (data: ISortProps) => http("tasks/reorder", { data, method: "POST" }),
+    useReorderConfig(queryKey)
   );
 };

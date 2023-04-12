@@ -1,7 +1,7 @@
 import { useTasks } from "@/hooks/useTask";
 import { useTaskTypes } from "@/hooks/useTaskType";
 import { IKanban, ITask } from "@/typings";
-import { FC } from "react";
+import { forwardRef } from "react";
 import { Card, MenuProps, Dropdown, Row, Col, Modal, Button } from "antd";
 import {
   useKanbanQueryKey,
@@ -12,6 +12,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styles from "./index.module.scss";
 import CreateTask from "../CreateTask";
 import Mark from "@components/Base/Mark";
+import { Drop, DropChild, Drag } from "@components/DragAndDrop";
 import { useDeleteKanban } from "@/hooks/useKanbans";
 
 export interface IProps {
@@ -81,28 +82,44 @@ const More = ({ kanban }: { kanban: IKanban }) => {
   );
 };
 
-export const KanbanColumn: FC<IProps> = ({ kanban }) => {
-  const { data: allTasks } = useTasks(useTasksSearchParams());
-  const currentTasks = allTasks?.filter((task) => task.kanbanId === kanban.id);
+export const KanbanColumn = forwardRef<HTMLDivElement, IProps>(
+  ({ kanban, ...restProps }, ref) => {
+    const { data: allTasks } = useTasks(useTasksSearchParams());
+    const currentTasks = allTasks?.filter(
+      (task) => task.kanbanId === kanban.id
+    );
 
-  return (
-    <div className={styles.kanbanColumnContainer}>
-      <h3>
-        <Row justify="space-between">
-          <Col>
-            <span>{kanban.name}</span>
-          </Col>
-          <Col>
-            <More kanban={kanban} />
-          </Col>
-        </Row>
-      </h3>
-      <div className="styles.tasksConatainer">
-        {currentTasks?.map((task) => (
-          <TaskCard task={task} key={task.id} />
-        ))}
-        <CreateTask kanbanId={kanban.id} />
+    return (
+      <div className={styles.kanbanColumnContainer} ref={ref} {...restProps}>
+        <h3>
+          <Row justify="space-between">
+            <Col>
+              <span>{kanban.name}</span>
+            </Col>
+            <Col>
+              <More kanban={kanban} key={kanban.id} />
+            </Col>
+          </Row>
+        </h3>
+        <div className="styles.tasksConatainer">
+          <Drop type="ROW" direction="vertical" droppableId={kanban.id + ""}>
+            <DropChild>
+              {currentTasks?.map((task, taskIndex) => (
+                <Drag
+                  key={task.id}
+                  index={taskIndex}
+                  draggableId={"task" + task.id}
+                >
+                  <div>
+                    <TaskCard task={task} key={task.id} />
+                  </div>
+                </Drag>
+              ))}
+            </DropChild>
+          </Drop>
+          <CreateTask kanbanId={kanban.id} />
+        </div>
       </div>
-    </div>
-  );
-};
+    );
+  }
+);
