@@ -1,3 +1,5 @@
+export * as Epic from "./modules/epic";
+
 export interface IUser {
   id: number;
   name: string;
