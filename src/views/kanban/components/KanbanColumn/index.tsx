@@ -103,7 +103,7 @@ export const KanbanColumn = forwardRef<HTMLDivElement, IProps>(
         </h3>
         <div className="styles.tasksConatainer">
           <Drop type="ROW" direction="vertical" droppableId={kanban.id + ""}>
-            <DropChild>
+            <DropChild style={{ minHeight: "10px" }}>
               {currentTasks?.map((task, taskIndex) => (
                 <Drag
                   key={task.id}

@@ -6,7 +6,7 @@ import {
   useAddConfig,
   useEditConfig,
   useDeleteConfig,
-  useReorderConfig,
+  useReorderTaskConfig,
 } from "@hooks/useOptimisticOptions";
 import type { ISortProps as ISortKanbanProps } from "./useKanbans";
 
@@ -67,6 +67,6 @@ export const useReorderTask = (queryKey: QueryKey) => {
   const http = useHttp();
   return useMutation(
     (data: ISortProps) => http("tasks/reorder", { data, method: "POST" }),
-    useReorderConfig(queryKey)
+    useReorderTaskConfig(queryKey)
   );
 };

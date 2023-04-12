@@ -5,7 +5,7 @@ import useHttp from "./useHttp";
 import {
   useAddConfig,
   useDeleteConfig,
-  useReorderConfig,
+  useReorderKanbanConfig,
 } from "@hooks/useOptimisticOptions";
 
 export const useKanbans = (params?: Partial<IKanban>) => {
@@ -48,6 +48,6 @@ export const useReorderKanban = (queryKey: QueryKey) => {
   const http = useHttp();
   return useMutation(
     (data: ISortProps) => http("kanbans/reorder", { data, method: "POST" }),
-    useReorderConfig(queryKey)
+    useReorderKanbanConfig(queryKey)
   );
 };
