@@ -12,6 +12,16 @@ yarn
 yarn start
 ```
 
+## 打包项目
+
+```bash
+yarn build
+```
+
+[serve](https://create-react-app.dev/docs/deployment/)
+
+打包之后本地可以安装 `serve` 启动对应的 `build` 文件，查看页面效果
+
 ## 简单说明
 
 ### 配置路径别名

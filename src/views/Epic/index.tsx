@@ -18,9 +18,8 @@ const Epic = () => {
 
   const confirmDeleteEpic = (epic: IEpic) => {
     modal.confirm({
-      title: `确定删除项目组：${epic.name}`,
-      content: "点击确定删除",
-      okText: "确定",
+      title: `warning`,
+      content: `确定删除项目组：${epic.name}`,
       onOk: () => deleteEpic({ id: epic.id }),
     });
   };
@@ -72,6 +71,7 @@ const Epic = () => {
                 ?.filter((task) => task.epicId === epic.id)
                 .map((task) => (
                   <Link
+                    style={{ marginRight: "5px" }}
                     to={`/projects/${currentProject?.id}/kanban?editingTaskId=${task.id}`}
                     key={task.id}
                   >
