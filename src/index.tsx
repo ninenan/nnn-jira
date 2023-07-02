@@ -1,17 +1,17 @@
+import router from "@/routes";
+import ErrorBoundary from "@components/Base/ErrorBoundary";
+import FullScreenErrorCallback from "@components/Base/FullScreenErrorFallback";
 import { AppProvider } from "@context/index";
 import { DevTools, loadServer } from "jira-dev-tool";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { RouterProvider } from "react-router-dom";
-import reportWebVitals from "./reportWebVitals";
-import router from "@/routes";
-import ErrorBoundary from "@components/Base/ErrorBoundary";
-import FullScreenErrorCallback from "@components/Base/FullScreenErrorFallback";
 import "./App.css";
+import reportWebVitals from "./reportWebVitals";
 // import "antd/dist/reset.css";
-import "antd/dist/reset.css";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fas } from "@fortawesome/free-solid-svg-icons";
+import "antd/dist/reset.css";
 library.add(fas);
 
 const root = ReactDOM.createRoot(
