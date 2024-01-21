@@ -56,7 +56,7 @@ export const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
     };
 
     init();
-  }, []);
+  }, [run]);
   // eslint-disable-next-line react-hooks/exhaustive-deps
 
   if (isLoading || isInitial) {
