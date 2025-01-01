@@ -14,7 +14,7 @@ const useHome = () => {
   useDocumentTitle("请登录或者注册");
 
   const handleLogin = async (val: { username: string; password: string }) => {
-    // 这里可以使用 trycatch 或者 catch
+    // 这里可以使用 try catch 或者 catch
     try {
       await run(login(val));
     } catch (error) {

@@ -4,7 +4,7 @@
 2. 当自定义 hook 返回出去函数的时候，基本都是要加上 useCallback（概率很大）
 3. 当别的组件依赖于当前这个组件导出的函数时，如果不加上 useCallback，页面的每次渲染都会导致重新创建函数，从而导致无限渲染
 
-```typescript
+```typescriptreact
 export const useTest = () => {
   const setData = useCallback(
     (data: T) =>
@@ -32,7 +32,7 @@ export const useTest = () => {
 
 可以使用函数式的方式来设置
 
-```typescript
+```typescriptreact
 setState((prev) => ({ ...prev, status: "pending" }));
 ```
 
@@ -44,7 +44,7 @@ setState((prev) => ({ ...prev, status: "pending" }));
 
 useTest.ts
 
-```typescript
+```typescriptreact
 const usetTest = () => {
   const a = () => {};
   const b = 1;
@@ -56,7 +56,7 @@ const usetTest = () => {
 
 app.ts
 
-```typescript
+```typescriptreact
 import useTest from "useTest";
 
 const app = () => {
