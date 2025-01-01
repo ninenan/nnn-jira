@@ -6,7 +6,7 @@
 
 ACom.tsx
 
-```typescript
+```typescriptreact
 import React from "react";
 
 const ACom = () => {
@@ -18,7 +18,7 @@ export default ACom;
 
 BCom.tsx
 
-```typescript
+```typescriptreact
 import React from "react";
 
 const BCom = () => {
@@ -30,7 +30,7 @@ export default BCom;
 
 CCom.tsx
 
-```typescript
+```typescriptreact
 import React from "react";
 
 const CCom = () => {
@@ -42,7 +42,7 @@ export default CCom;
 
 Home.tsx
 
-```typescript
+```typescriptreact
 import React from "react";
 import { Routes, Route, HashRouter } from "react-router-dom";
 
@@ -71,7 +71,7 @@ export default Home;
 
 ACom.tsx
 
-```typescript
+```typescriptreact
 import React from "react";
 import { Outlet } from "react-router-dom";
 
@@ -105,7 +105,7 @@ export default ACom;
 
 ACom2.tsx
 
-```typescript
+```typescriptreact
 import React from "react";
 import { Outlet } from "react-router-dom";
 
@@ -118,7 +118,7 @@ export default ACom;
 
 Home.tsx
 
-```typescript
+```typescriptreact
 import React from "react";
 import { Routes, Route, Navigate, HashRouter } from "react-router-dom";
 
@@ -152,7 +152,7 @@ export default Home;
 3. `<Navigate to="/a/id:name" />` 遇到组件就会跳转 `id` 是必传，`name` 是可选
 4. 编程式导航
 
-```typescript
+```typescriptreact
 import { useNavigate } from "react-router-dom";
 import qs from "qs";
 
@@ -171,7 +171,7 @@ navigate({ pathname: "/c", search: qs.stringify({ id: "1", name: "xxx" }) });
 
    1. `useLocation`
 
-   ```typescript
+   ```typescriptreact
    import { useLocation, useNavigate } from "react-router-dom";
 
    // 跳转方式
@@ -189,7 +189,7 @@ navigate({ pathname: "/c", search: qs.stringify({ id: "1", name: "xxx" }) });
 
    2. `useSearchParams`
 
-   ```typescript
+   ```typescriptreact
    import { useSearchParams, useNavigate } from "react-router-dom";
    import qs from "qs";
 
@@ -211,7 +211,7 @@ navigate({ pathname: "/c", search: qs.stringify({ id: "1", name: "xxx" }) });
 
 2. 路径传参（地址栏可见）
 
-```typescript
+```typescriptreact
 import { useParams, Route, useNavigate } from "react-router-dom";
 
 // 路由中的配置
@@ -228,7 +228,7 @@ console.log(params); // {id: 1, name: xxx}
 
 4. 隐式传参（地址栏不可见，但是也会一直保持信息）
 
-```typescript
+```typescriptreact
 import { useNavigate, useLocation } from 'react-router-dom';
 
 // 跳转方式
@@ -243,7 +243,7 @@ console.log(location.state) //  {id: 1, name: 'xxx'}
 
 ACom.tsx
 
-```typescript
+```typescriptreact
 import React from "react";
 
 const ACom = () => {
@@ -255,7 +255,7 @@ export default ACom;
 
 BCom.tsx
 
-```typescript
+```typescriptreact
 import React from "react";
 
 const BCom = () => {
@@ -267,7 +267,7 @@ export default BCom;
 
 HeaderCom.tsx
 
-```typescript
+```typescriptreact
 import React from "react";
 import { useLocation } from "react-router-dom";
 
@@ -282,7 +282,7 @@ export default BCom;
 
 Home.tsx
 
-```typescript
+```typescriptreact
 import React from "react";
 import { Routes, Route, Navigate, HashRouter } from "react-router-dom";
 
@@ -311,7 +311,7 @@ export default Home;
 
 One.tsx
 
-```typescript
+```typescriptreact
 import React from "react";
 
 const One = () => {
@@ -323,7 +323,7 @@ export default One;
 
 OneSon.tsx
 
-```typescript
+```typescriptreact
 import React from "react";
 
 const OneSon = () => {
@@ -335,7 +335,7 @@ export default OneSon;
 
 Two.tsx
 
-```typescript
+```typescriptreact
 import React from "react";
 
 const Two = () => {
@@ -347,7 +347,7 @@ export default Two;
 
 router.config.ts
 
-```typescript
+```typescriptreact
 import { lazy } from "react";
 
 export interface IRoute {
@@ -387,7 +387,7 @@ export default routes;
 
 router.index.tsx
 
-```typescript
+```typescriptreact
 import React, { Suspense } from "react";
 import {
   useNavigate,
@@ -479,7 +479,7 @@ export default RouterView;
 
 App.tsx
 
-```typescript
+```typescriptreact
 import { HashRouter } from "react-router-dom";
 import RouterView from "./router";
 
