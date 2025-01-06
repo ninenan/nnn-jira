@@ -15,12 +15,12 @@ const ProjectModal = () => {
   const { projectModalOpen, close, editingProject, isLoading } =
     useProjectModal();
   const title = editingProject ? "编辑项目" : "创建项目";
-  const useMutateProjet = editingProject ? useEditProject : useAddProject;
+  const useMutateProject = editingProject ? useEditProject : useAddProject;
   const {
     mutateAsync,
     isLoading: mutateLoading,
     error,
-  } = useMutateProjet(useProjectsQueryKey());
+  } = useMutateProject(useProjectsQueryKey());
   const [form] = Form.useForm();
   const { data: users } = useUsers();
 
