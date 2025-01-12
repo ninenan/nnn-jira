@@ -6,11 +6,11 @@ type State<T> = {
   present: T;
 };
 type StateType = "UNDO" | "REDO" | "SET" | "RESET";
-type Action<T> = { newPresnet?: T; type: StateType };
+type Action<T> = { newPresent?: T; type: StateType };
 
 const undoReducer = <T>(state: State<T>, action: Action<T>) => {
   const { past, present, future } = state;
-  const { type, newPresnet } = action;
+  const { type, newPresent } = action;
 
   switch (type) {
     case "UNDO":
@@ -36,19 +36,19 @@ const undoReducer = <T>(state: State<T>, action: Action<T>) => {
         future: newFuture,
       };
     case "SET":
-      if (newPresnet === present) {
+      if (newPresent === present) {
         return state;
       }
 
       return {
         past: [...past, present],
-        present: newPresnet as any,
+        present: newPresent as any,
         future: [],
       };
     case "RESET":
       return {
         past: [],
-        present: newPresnet as any,
+        present: newPresent as any,
         future: [],
       };
     default:
@@ -71,12 +71,12 @@ const useUndo = <T>(initialPresent: T) => {
   const redo = useCallback(() => dispatch({ type: "REDO" }), []);
 
   const set = useCallback(
-    (newPresnet: T) => dispatch({ type: "SET", newPresnet }),
+    (newPresent: T) => dispatch({ type: "SET", newPresent: newPresent }),
     []
   );
 
   const reset = useCallback(
-    (newPresnet: T) => dispatch({ type: "RESET", newPresnet }),
+    (newPresent: T) => dispatch({ type: "RESET", newPresent: newPresent }),
     []
   );
 
