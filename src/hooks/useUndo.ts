@@ -42,13 +42,13 @@ const undoReducer = <T>(state: State<T>, action: Action<T>) => {
 
       return {
         past: [...past, present],
-        present: newPresent as any,
+        present: newPresent as T as any,
         future: [],
       };
     case "RESET":
       return {
         past: [],
-        present: newPresent as any,
+        present: newPresent as T as any,
         future: [],
       };
     default:
