@@ -45,7 +45,7 @@ setState((prev) => ({ ...prev, status: "pending" }));
 useTest.ts
 
 ```typescriptreact
-const usetTest = () => {
+const useTest = () => {
   const a = () => {};
   const b = 1;
   const c = 2;
